@@ -1,0 +1,59 @@
+{
+    // ======================================================================
+    // 1. Python Interpreter & Environment
+    // ======================================================================
+    // This setting is often machine-specific. It's better to use the command
+    // `Python: Select Interpreter` from the command palette (Cmd+Shift+P)
+    // to select the interpreter located in the `.venv` directory of the project.
+    // VS Code will automatically create a `.vscode/settings.json` with the correct path.
+    // Example for a user-level setting (not project-specific):
+    // "python.defaultInterpreterPath": "/path/to/your/conda/envs/my-project-env/bin/python",
+
+    // ======================================================================
+    // 2. Language Server: BasedPyright takes over
+    // ======================================================================
+    "python.languageServer": "None",
+    // Disables Microsoft's default server (Pylance) to let our specialized `BasedPyright` server take full control.
+
+    "python.analysis.typeCheckingMode": "off",
+    // Turns off the built-in type checking of the Python plugin to avoid duplicate error messages.
+
+    // ======================================================================
+    // 3. Formatting & Linting with Ruff
+    // ======================================================================
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        // Sets Ruff as the default tool for code formatting.
+
+        "editor.formatOnSave": true,
+        // Automatically formats your code on every save.
+
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            // Automatically fixes safe, non-controversial linting errors on save.
+
+            "source.organizeImports.ruff": "explicit"
+            // Automatically sorts and removes unused imports on save.
+        }
+    },
+    "ruff.importStrategy": "fromEnvironment",
+    // Ensures the Ruff extension uses the exact version of Ruff from your Poetry environment.
+
+    // ======================================================================
+    // 4. Test Integration
+    // ======================================================================
+    "python.testing.pytestEnabled": true,
+    // Enables the "Test Explorer" sidebar in VS Code for a graphical test runner.
+
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    // Tells the Test Explorer to look for tests in the `tests` directory.
+
+    // ======================================================================
+    // 5. Automatische Terminal-Aktivierung
+    // ======================================================================
+    "python.terminal.activateEnvironment": true
+    // Erklärung: Stellt sicher, dass jedes neue integrierte Terminal (`Cmd + Shift + ö` oder `Ctrl + Shift + `)
+    // automatisch den `conda activate my-project-env`-Befehl ausführt.
+}
