@@ -16,7 +16,7 @@ This project is a highly opinionated, modern blueprint for building robust, type
 
 ### 1. Prerequisites
 - [Conda](https://docs.conda.io/en/latest/miniconda.html) for environment management.
-- [Poetry](https://python-poetry.org/docs/#installation) for dependency management.
+- [Poetry](https://python-poetry.org/docs/#installation) for package management.
 
 ### 2. Installation
 
@@ -24,10 +24,16 @@ This project is a highly opinionated, modern blueprint for building robust, type
 # Clone the repository
 git clone https://github.com/<Your-GitHub-Username>/<Your-Repo-Name>.git
 cd <Your-Repo-Name>
+```
 
+Change project name 'py-starter' to yours
+- `pyproject.toml`
+- `conda.yml`
+
+```bash
 # Create and activate the conda environment
-conda create -n functional-python-blueprint python=3.12 -y
-conda activate functional-python-blueprint
+conda env create --file conda.yml
+conda activate py-starter
 
 # Install dependencies using Poetry
 poetry install

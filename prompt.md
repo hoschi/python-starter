@@ -16,7 +16,7 @@ Du bist ein Senior Softwareentwickler mit tiefgreifender Expertise in Python, fu
 
 **III. Aufgaben**
 
-# Initialisierung (erledigt)
+# Initialisierung (wip, hat noch Fehler!)
 
 ### **Planungsübersicht: Das "Pragmatic Functional Python" Boilerplate**
 

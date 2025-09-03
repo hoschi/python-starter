@@ -1,0 +1,5 @@
+name: py-starter
+channels:
+  - defaults
+dependencies:
+  - python=3.12

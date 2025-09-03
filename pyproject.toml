@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "functional-python-blueprint"
+name = "py-starter"
 version = "0.1.0"
 description = "A blueprint for building robust, type-safe, and maintainable Python applications with a functional approach."
 authors = ["Your Name <you@example.com>"]
