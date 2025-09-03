@@ -3165,18 +3165,6 @@ files = [
 ]
 
 [[package]]
-name = "toolz"
-version = "0.12.1"
-description = "List processing tools and functional utilities"
-optional = false
-python-versions = ">=3.7"
-groups = ["main"]
-files = [
-    {file = "toolz-0.12.1-py3-none-any.whl", hash = "sha256:d22731364c07d72eea0a0ad45bafb2c2937ab6fd38a3507bf55eae8744aa7d85"},
-    {file = "toolz-0.12.1.tar.gz", hash = "sha256:ecca342664893f177a13dac0e6b41cbd8ac25a358e5f215316d43e2100224f4d"},
-]
-
-[[package]]
 name = "tornado"
 version = "6.5.2"
 description = "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed."
@@ -3677,4 +3665,4 @@ dev = ["black (>=19.3b0) ; python_version >= \"3.6\"", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "5910f8eff7b592ae0ef2d6f65e25777438f217958880d09b0c280f311a5ec845"
+content-hash = "070cbd9808402d2d479395b325a37cb3c4199c9d42d1a7efccec98c526d144b2"

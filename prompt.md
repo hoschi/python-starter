@@ -6,8 +6,8 @@ Du bist ein Senior Softwareentwickler mit tiefgreifender Expertise in Python, fu
 
 1.  **INKREMENTELLER ARBEITSABLAUF:** Du arbeitest jede h1 Heading im Teil "III. Aufgaben" **Schritt für Schritt** ab. Nach jeder abgeschlossenen Aufgabe fügst du der Überschrift "(erledigt)" an.
 2.  **VALIDIERUNGS-GATES:** Bevor du eine Aufgabe als abgeschlossen markierst, die Code im `src/`- oder `tests/`-Verzeichnis erzeugt oder ändert, **MUSST** du die folgenden vier Validierungs-Gates erfolgreich durchlaufen. Zeige das Ergebnis dieser Befehle an. Wenn einer fehlschlägt, korrigiere den Code, bis alle erfolgreich sind.
-    *   `poetry run ruff format --check .` (Formatierungs-Check)
-    *   `poetry run ruff check .` (Linting-Check)
+    *   `poetry run ruff format .` (Formatierungs-Check)
+    *   `poetry run ruff check --fix .` (Linting-Check)
     *   `poetry run basedpyright` (Typisierungs-Check)
     *   `poetry run pytest` (Test- & Coverage-Check)
 3.  **"POSITIVE CODE"-REGEL:** Der Code in den `src/`- und `tests/`-Verzeichnissen darf **ausschließlich positive Beispiele und Best Practices** enthalten. Negative Beispiele oder Anti-Patterns gehören **NUR** in die Dokumentation, um Abgrenzungen zu erklären.
@@ -17,6 +17,13 @@ Du bist ein Senior Softwareentwickler mit tiefgreifender Expertise in Python, fu
 **III. Aufgaben**
 
 # Initialisierung (wip, hat noch Fehler!)
+
+* erledigt
+    * conda und poetry setup
+    * beispiel code im `src/` Ordner fertig
+* offen
+    * der `docs/` ordner noch erstellt werden und mit Inhalt gefüllt werden
+    * Validierungs Gates laufen noch nicht durch
 
 ### **Planungsübersicht: Das "Pragmatic Functional Python" Boilerplate**
 
@@ -43,7 +50,7 @@ my_functional_project/
 │   └── settings.json           # Empfohlene VS Code-Einstellungen für das Team
 ├── docs/
 │   ├── 01-core-concepts.md     # Doku für Must-Know-Konzepte (Result, Pydantic)
-│   └── 02-advanced-patterns.md # Doku für optionale Konzepte (Lenses, Pyrsistent)
+│   └── 02-advanced-patterns.md # Doku für optionale Konzepte (Pyrsistent)
 ├── my_project/
 │   ├── __init__.py
 │   ├── core/
@@ -72,7 +79,7 @@ my_functional_project/
     *   Nutzt `poetry` für das Dependency-Management.
     *   Enthält die Konfiguration für `ruff` (Linting + Formatting) und `basedpyright` (strict type checking).
     *   Definiert `pydantic` und `returns` als Kern-Abhängigkeiten.
-    *   Hält `pyrsistent`, `python-lenses` und `toolz` als verfügbare, aber nicht zwingend genutzte Bibliotheken vor.
+    *   Hält `pyrsistent` als verfügbare, aber nicht zwingend genutzte Bibliotheken vor.
 
 *   **`README.md`**:
     *   Eine kurze Anleitung zur **Installation** (`conda` + `poetry`).
@@ -86,7 +93,7 @@ my_functional_project/
 *   **`my_project/core/services.py`**:
     *   Demonstriert die Implementierung der **Business-Logik in reinen Funktionen**.
     *   Alle Funktionen geben `returns.Result` oder `returns.Maybe` zurück.
-    *   Zeigt eine funktionale Pipeline mit `toolz.pipe`.
+    *   Zeigt eine funktionale Pipeline mit `returns.pipe`.
     *   Enthält **keinerlei I/O-Code** (keine `requests`-Aufrufe, keine DB-Verbindungen).
 
 *   **`my_project/entrypoints/`**:
@@ -109,11 +116,10 @@ Die Dokumentation wird in zwei klare Bereiche geteilt, um die Einarbeitung zu er
 *   **`01-core-concepts.md` (Die "Pflichtlektüre")**:
     *   **Error Handling mit `Result`**: Warum und wie. Mit Code-Snippets.
     *   **Datenvalidierung mit `Pydantic`**: Die Rolle als "Boundary Guard".
-    *   **Funktionale Pipelines**: Wie man mit `toolz.pipe` saubere Transformationen baut.
+    *   **Funktionale Pipelines**: Wie man mit `returns.pipe` saubere Transformationen baut.
 
 *   **`02-advanced-patterns.md` (Die "Toolbox für Spezialfälle")**:
     *   **Strikte Immutability mit `pyrsistent`**: Wann man es anstelle von `frozen dataclasses` braucht (Beispiel: komplexes State-Management).
-    *   **Tiefe Updates mit `lenses`**: Wann und wie man tief verschachtelte, unveränderliche Daten elegant anpasst.
     *   Enthält für jedes Konzept eine "Wann sollte ich das benutzen?"-Sektion.
 
 ---
@@ -176,8 +182,8 @@ my_functional_project/
     *   Ein neuer Abschnitt erklärt, wie man die interaktiven `docs/*.ipynb`-Notebooks in VS Code öffnet und ausführt, um die Konzepte live zu erproben.
 
 *   **`docs/*.ipynb`**:
-    *   **`01_core_concepts.ipynb`**: Enthält Markdown-Zellen mit Erklärungen und Code-Zellen mit lauffähigen Beispielen für `returns.Result`, `Pydantic` und `toolz.pipe`. Jede Zelle kann einzeln ausgeführt werden, um die Ausgabe direkt zu sehen.
-    *   **`02_advanced_patterns.ipynb`**: Demonstriert `pyrsistent` und `python-lenses` in interaktiven Code-Zellen, sodass man die Effekte von unveränderlichen Updates und Lens-Operationen sofort nachvollziehen kann.
+    *   **`01_core_concepts.ipynb`**: Enthält Markdown-Zellen mit Erklärungen und Code-Zellen mit lauffähigen Beispielen für `returns.Result`, `Pydantic` und `returns.pipe`. Jede Zelle kann einzeln ausgeführt werden, um die Ausgabe direkt zu sehen.
+    *   **`02_advanced_patterns.ipynb`**: Demonstriert `pyrsistent` in interaktiven Code-Zellen, sodass man die Effekte von unveränderlichen Updates und schnellen vergleichen von Objekten nachvollziehbar ist
 
 *   **Entrypoints**:
     *   `api.py` und `cli.py` bleiben konzeptionell gleich, aber die `README.md` und `pyproject.toml` werden so angepasst, dass sie einfach über `poetry run`-Befehle gestartet werden können. Dafür werden `[tool.poetry.scripts]`-Einträge hinzugefügt.
@@ -806,9 +812,8 @@ Meine Strategie ist hier, **nicht auf eine einzige "Ramda-für-Python"-Bibliothe
 
 Die Ramda-Funktionalität wird durch dieses "Core Trio" abgedeckt:
 
-1.  **`toolz` / `cytoolz`:** Für Pipelines, Currying und die meisten Datenmanipulationen.
+1.  **`returns`:** Für Pipelines
 2.  **`pyrsistent`:** Für strikt unveränderliche Datenstrukturen.
-3.  **`python-lenses`:** Für elegante, tiefe Updates von unveränderlichen Strukturen.
 
 ---
 
@@ -816,11 +821,11 @@ Die Ramda-Funktionalität wird durch dieses "Core Trio" abgedeckt:
 
 | Ramda-Konzept | Primäre Python-Bibliothek | Warum diese Wahl? & Wie es im Boilerplate genutzt wird |
 | :-- | :-- | :-- |
-| **Pipelines & Komposition**<br>(`pipe`, `compose`) | **`toolz`** | `toolz.pipe` ist extrem performant, gut typisiert und das Python-Äquivalent zu `R.pipe`. Es ist der Standard für das Verketten von reinen Funktionen. **Im Boilerplate:** Wird in `services.py` und im `core_concepts.ipynb`-Notebook als Standard-Pattern für Daten-Transformationen gezeigt. |
-| **Currying & Partielle Anwendung**<br>(`curry`, `partial`) | **`toolz`** | `toolz.curry` implementiert Currying, das dem von Ramda sehr nahekommt (Daten-Argument zuletzt). Dies ermöglicht die Erstellung von spezialisierten Funktionen "on the fly". **Im Boilerplate:** Das Notebook wird ein Beispiel für Currying zeigen, z.B. `@curry def add(a, b): return a + b`. |
-| **Listen-/Array-Manipulation**<br>(`map`, `filter`, `groupBy`, `uniq`) | **`toolz`** | `toolz` bietet eine reichhaltige, lazy-evaluierte und performante Sammlung von Helfern für Iterables (`itertoolz`). Sie sind oft schneller als eingebaute List Comprehensions. **Im Boilerplate:** Ein Beispiel für `toolz.groupby` wird gezeigt. |
-| **Objekt-/Dictionary-Manipulation**<br>(`assoc`, `prop`, `merge`) | **`pyrsistent` & `toolz`** | Für **unveränderliche** Updates ist `pyrsistent.PMap` mit `.set()` die Wahl (`R.assoc`-Äquivalent). Für einfache, nicht-mutierende Operationen auf normalen Dictionaries bietet `toolz.dicttoolz` Helfer. **Im Boilerplate:** `pyrsistent.PMap` wird im `advanced_patterns.ipynb` als Standard für State-Management vorgestellt. |
-| **Lenses**<br>(`lens`, `view`, `set`, `over`, `lensPath`) | **`python-lenses`** | Dies ist die **direkteste und vollständigste Entsprechung** zur Lens-Funktionalität von Ramda. Sie bietet eine elegante, kompositionierbare Syntax für das Lesen und Schreiben in tief verschachtelten, unveränderlichen Strukturen. **Im Boilerplate:** Das `advanced_patterns.ipynb` wird ein dediziertes Kapitel zu `lenses` haben, das den Anwendungsfall "Update eines tiefen Werts im State" zeigt. |
+| **Pipelines & Komposition**<br>(`pipe`, `flow`) | **`returns`** | `returns.pipe` ist extrem performant, gut typisiert und das Python-Äquivalent zu `R.pipe`. Es ist der Standard für das Verketten von reinen Funktionen. **Im Boilerplate:** Wird in `services.py` und im `core_concepts.ipynb`-Notebook als Standard-Pattern für Daten-Transformationen gezeigt. |
+| **Currying & Partielle Anwendung**<br>(`curry`, `partial`) | **`returns`** | `returns.curry` implementiert Currying, das dem von Ramda sehr nahekommt (Daten-Argument zuletzt). Dies ermöglicht die Erstellung von spezialisierten Funktionen "on the fly". **Im Boilerplate:** Das Notebook wird ein Beispiel für Currying zeigen, z.B. `@curry def add(a, b): return a + b`. |
+| **Listen-/Array-Manipulation**<br>(`map`, `filter`, `groupBy`, `uniq`) | **-** | Python standard lib mit selbst gebauten utils wo nötig |
+| **Objekt-/Dictionary-Manipulation**<br>(`assoc`, `prop`, `merge`) | **`pyrsistent` & `python std lib`** | Für **unveränderliche** Updates ist `pyrsistent.PMap` mit `.set()` die Wahl (`R.assoc`-Äquivalent). Für einfache, nicht-mutierende Operationen auf normalen Dictionaries werden Pythons Bordmittel benutzt. **Im Boilerplate:** `pyrsistent.PMap` wird im `advanced_patterns.ipynb` als Standard für State-Management vorgestellt. |
+| **Lenses**<br>(`lens`, `view`, `set`, `over`, `lensPath`) | **`-`** | Wird weg gelassen und später implementiert |
 | **Immutability** | **`pyrsistent`** | Ramda's Immutability wird am besten durch echte persistente Datenstrukturen abgebildet. `pyrsistent` ist hier der Goldstandard in Python, da es effizientes Structural Sharing bietet. **Im Boilerplate:** `pyrsistent` ist als "Advanced"-Konzept für robustes State-Management dokumentiert. |
 
 ---
@@ -829,9 +834,8 @@ Die Ramda-Funktionalität wird durch dieses "Core Trio" abgedeckt:
 
 In der Diskussion haben wir `ramda.py` und `python-ramda` kurz gestreift. Ich werde diese bewusst **nicht** in das Boilerplate aufnehmen. Die Gründe sind:
 
-1.  **Geringere Popularität und Wartung:** Sie haben eine viel kleinere Community als `toolz` oder `pyrsistent`. Das bedeutet weniger Support, langsamere Updates und ein höheres Risiko, dass das Projekt aufgegeben wird.
+1.  **Geringere Popularität und Wartung:** Sie haben eine viel kleinere Community als `pyrsistent`. Das bedeutet weniger Support, langsamere Updates und ein höheres Risiko, dass das Projekt aufgegeben wird.
 2.  **Schwächere Typisierung:** Die Typ-Hints in diesen Klonen sind oft unvollständig oder nicht mit modernen Type-Checkern wie `BasedPyright` im `strict`-Modus kompatibel. Der "Best-of-Breed"-Ansatz bietet hier eine weitaus bessere Typsicherheit.
-3.  **Performance:** `cytoolz` (die Cython-Version von `toolz`) und `pyrsistent` (mit C-Extensions) sind um Größenordnungen schneller als reine Python-Implementierungen.
 
 ### So wird es im Boilerplate aussehen
 
@@ -845,24 +849,21 @@ Alle drei Bibliotheken werden als Kern-Abhängigkeiten oder als "optional" für 
 returns = "..."
 pydantic = "..."
 # Pragmatic FP Utilities
-toolz = "..."
 pyrsistent = "..."
-python-lenses = "..."
 ```
 
 **2. In der Dokumentation (`docs/*.ipynb`):**
 
 Die Notebooks werden die Brücke von Ramda zu Python schlagen:
 
-*   **`01_core_concepts.ipynb`** wird zeigen: "Wenn du in Ramda `R.pipe([...])` schreibst, schreibst du in Python `toolz.pipe(...)`."
-*   **`02_advanced_patterns.ipynb`** wird erklären: "Für `R.set(R.lensPath(...))` ist `lens['path'][...].set(...)` das Python-Äquivalent."
+*   **`01_core_concepts.ipynb`** wird zeigen: "Wenn du in Ramda `R.pipe([...])` schreibst, schreibst du in Python `returns.pipe(...)`."
 
 **3. Im Code (`src/core/services.py`):**
 
-Der Beispiel-Service wird eine funktionale Pipeline mit `toolz.pipe` verwenden, um die grundlegende Datenmanipulation zu demonstrieren.
+Der Beispiel-Service wird eine funktionale Pipeline mit `returns.pipe` verwenden, um die grundlegende Datenmanipulation zu demonstrieren.
 
 ```python
-from toolz import pipe
+from returns import pipe
 from typing import List, Dict
 
 # Beispiel-Pipeline, die Ramda-Nutzern sehr vertraut sein wird
@@ -881,167 +882,223 @@ Wenn Sie mit dieser "Best-of-Breed"-Strategie für Ramda-Funktionalität einvers
 
 Geben Sie das Kommando: **"Generiere das Projekt"**.
 
-# toolz vs pyrsistent
+# pyrsistent vs einfache Datenmanipulation
 
-Exzellent, das ist der Kernpunkt einer pragmatischen funktionalen Herangehensweise. Die Entscheidung, wann man bei einfachen, nicht-mutierenden Operationen auf Standard-Dictionaries bleibt und wann man zu garantierten, persistenten Datenstrukturen wechselt, ist entscheidend für die Balance zwischen Einfachheit und Robustheit.
+Das ist die nächste logische und absolut entscheidende Frage. Eine funktionale Toolbox ist ohne diese grundlegenden Listen-Operationen unvollständig.
 
-Ich werde sicherstellen, dass diese Trennlinie im Boilerplate nicht nur vorhanden, sondern **klar und deutlich dokumentiert** ist. Der Leitsatz wird sein:
+Die Antwort darauf wird unsere Strategie finalisieren und zeigen, wie wir einen reichhaltigen, Ramda-ähnlichen Funktionsumfang mit reinen Python-Mitteln und unserer Kernbibliothek `returns` erreichen.
 
-> **"Behandle alle Daten *als ob* sie unveränderlich wären. Nutze `pyrsistent`, wenn du eine *Garantie* dafür brauchst."**
-
-Hier ist der genaue Plan, wie ich diese wichtige Unterscheidung im Projekt verankern werde:
+Die Strategie ist eine pragmatische Mischung: **Wir nutzen die extrem leistungsfähigen und vollständig typisierten Bordmittel von Python, wo immer es geht, und ergänzen die wenigen fehlenden Funktionen mit unseren eigenen, kleinen, typsicheren Helfern.**
 
 ---
 
-### Die geplante Strategie: Zwei klar definierte Stufen der Unveränderlichkeit
+### **Die "Pythonic Functional"-Strategie für Listen-Operationen**
 
-#### Stufe 1: Der Standardfall (ca. 80% der Anwendungsfälle) -> `toolz.dicttoolz`
+#### 1. Für `map` und `filter`: Python's Built-ins und Comprehensions
 
-Dies ist der "Brot-und-Butter"-Ansatz für die tägliche Datenmanipulation, insbesondere bei der Verarbeitung von Daten, die von externen Quellen (APIs, Datenbanken) kommen oder nur eine kurze Lebensdauer haben.
+Hier ist Python von Natur aus stark. Wir brauchen keine externe Bibliothek.
 
-*   **Werkzeug:** `toolz.dicttoolz` (und Standard-Python-Dictionary-Comprehensions).
-*   **Prinzip:** Die Funktionen nehmen ein Standard-`dict` entgegen und geben ein **neues** Standard-`dict` zurück. Sie mutieren niemals das Original.
-*   **Wann verwenden?**
-    *   Bei der Verarbeitung von API-Antworten oder Datenbank-Zeilen.
-    *   Innerhalb von Daten-Transformations-Pipelines, bei denen die Daten "durchfließen".
-    *   Wenn die Datenstruktur einfach und nicht tief verschachtelt ist.
-    *   Für jede Art von kurzlebiger, zustandsloser Datenmanipulation.
+*   **Werkzeuge:** Die eingebauten Funktionen `map()` und `filter()` sowie List/Dict Comprehensions.
+*   **Typsicherheit:** **100%**. Moderne Type Checker wie `BasedPyright` verstehen diese Konstrukte perfekt und können Typen präzise ableiten.
+*   **Best Practice:**
+    *   Für einfache Transformationen innerhalb einer `returns.pipeline.pipe`-Kette sind `map` und `filter` oft prägnant.
+    *   Für die meisten anderen Fälle sind **List Comprehensions oft lesbarer und idiomatischer** in Python. Das Boilerplate wird beide Stile zeigen und Comprehensions als bevorzugte Methode für Klarheit empfehlen.
 
-**Integration im Boilerplate:**
-
-1.  **Code (`src/core/services.py`):** Die Beispiel-Pipeline wird bewusst `toolz` auf normalen Dictionaries verwenden, um zu zeigen, dass dies der empfohlene Standard ist.
-2.  **Dokumentation (`docs/01_core_concepts.ipynb`):** Das Notebook für die Kernkonzepte wird einen Abschnitt namens **"Sichere Dictionary-Manipulation mit `toolz`"** haben. Es wird betont, dass dies der empfohlene Weg ist, um `R.assoc`, `R.merge` etc. nachzubilden, ohne die Komplexität einer neuen Datenstruktur einzuführen.
-
-#### Stufe 2: Der Spezialfall (ca. 20% der Anwendungsfälle) -> `pyrsistent.PMap`
-
-Dies ist der "Power-Tool"-Ansatz, der dann zum Einsatz kommt, wenn die Daten eine längere Lebensdauer haben, als Zustand verwaltet werden oder wenn eine absolute Garantie der Unveränderlichkeit kritisch ist.
-
-*   **Werkzeug:** `pyrsistent.pmap`, `pyrsistent.pset`, `pyrsistent.pvector`.
-*   **Prinzip:** Die Daten werden in eine persistenten Datenstruktur umgewandelt. Jede Operation (`.set()`, `.add()`, `.append()`) gibt eine neue Instanz der persistenten Struktur zurück und ist dank Structural Sharing extrem effizient.
-*   **Wann verwenden?**
-    *   **State Management:** Der wichtigste Anwendungsfall. Zum Beispiel der Zustand eines KI-Agenten, der über mehrere Runden hinweg aktualisiert wird.
-    *   **Komplexe Konfigurationsobjekte:** Wenn eine Konfiguration durch mehrere Schichten der Anwendung gereicht wird und sichergestellt werden muss, dass sie nirgends verändert wird.
-    *   **Caching/Memoization:** Da `pmap`s hashable sind, können sie als Schlüssel in Caches verwendet werden, was mit normalen Dictionaries nicht geht.
-    *   **Concurrency:** Wenn Datenstrukturen zwischen Threads oder asynchronen Tasks geteilt werden, verhindert `pyrsistent` Race Conditions durch Mutationen.
-
-**Integration im Boilerplate:**
-
-1.  **Code (als Beispiel):** Ich werde ein kleines, auskommentiertes Beispiel für ein State-Management-Pattern in `src/core/services.py` oder direkt im Notebook hinzufügen.
-2.  **Dokumentation (`docs/02_advanced_patterns.ipynb`):** Dieses Notebook wird eine klare Sektion namens **"Garantierte Unveränderlichkeit: State Management mit `pyrsistent`"** enthalten. Der Abschnitt wird:
-    *   Die oben genannten Anwendungsfälle auflisten.
-    *   Ein lauffähiges Code-Beispiel zeigen, das den Unterschied zwischen der Mutation eines normalen `dict` und dem sicheren Update eines `pmap` demonstriert.
-    *   Die Performance-Vorteile von Structural Sharing bei großen Datenstrukturen kurz erläutern.
-
-### Die "Entscheidungs-Checkliste" in der Dokumentation
-
-Um die Wahl zu erleichtern, wird die Dokumentation eine einfache Checkliste enthalten:
-
-| Frage | Ihre Antwort | Empfehlung |
-| :-- | :-- | :-- |
-| Bearbeiten Sie kurzlebige Daten in einer Pipeline? | Ja | `toolz` |
-| Verwalten Sie einen langlebigen Zustand (z.B. in einem Agenten)? | Ja | `pyrsistent` |
-| Brauchen Sie eine *Laufzeit-Garantie* der Unveränderlichkeit? | Ja | `pyrsistent` |
-| Reicht eine Konvention ("wir mutieren nicht")? | Ja | `toolz` |
-| Benötigen Sie Dictionaries als Cache-Schlüssel? | Ja | `pyrsistent` |
-
-Dieser zweistufige, klar dokumentierte Ansatz stellt sicher, dass Ihr Team die Flexibilität von Standard-Dictionaries für einfache Aufgaben nutzen kann, aber auch über das Wissen und die Werkzeuge verfügt, um bei Bedarf auf die robustere und sicherere Welt der persistenten Datenstrukturen umzusteigen. Es ist Pragmatismus und Power in einem Paket.
-
-Ich bin bereit. Ihre Klarstellungen waren der letzte entscheidende Schritt.
-
-Geben Sie das finale Kommando: **"Generiere das Projekt"**.
-
-# python-lenses Integration
-
-Ja, absolut. Und das ist ein entscheidender Punkt. Ohne `python-lenses` wäre unser Ramda-Toolkit unvollständig.
-
-Die Verwendung von **`python-lenses`** ist fest im Plan verankert. Es wird als das **spezialisierte "chirurgische Werkzeug"** für die Bearbeitung von unveränderlichen, tief verschachtelten Datenstrukturen positioniert.
-
-Während `toolz` für breite Transformationen und `pyrsistent` für die grundlegende Unveränderlichkeit zuständig ist, füllt `python-lenses` die Lücke für präzise, deklarative Updates – genau das, wofür Lenses im Ramda- und Haskell-Ökosystem bekannt und beliebt sind.
-
----
-
-### Die geplante Rolle und Integration von `python-lenses`
-
-#### 1. Positionierung: Das Werkzeug für komplexe, unveränderliche Updates
-
-`python-lenses` wird nicht als Werkzeug für den alltäglichen Gebrauch positioniert, sondern als **mächtige Lösung für einen spezifischen, aber wichtigen Anwendungsfall**:
-
-*   **Der Anwendungsfall:** Sie haben eine komplexe, verschachtelte Datenstruktur (z.B. einen `pyrsistent.pmap` oder ein `frozen dataclass`, das den Zustand eines Agenten darstellt) und müssen einen Wert tief im Inneren ändern, ohne die ursprüngliche Struktur zu mutieren.
-
-#### 2. Integration im Boilerplate
-
-*   **Installation:** `python-lenses` wird als Standard-Abhängigkeit in der `[tool.poetry.dependencies]`-Sektion von `pyproject.toml` aufgeführt. Es ist also sofort für alle Entwickler verfügbar, ohne dass sie es extra installieren müssen.
-
-*   **Dokumentation (Der wichtigste Teil):**
-    *   Die Bibliothek wird im **`docs/02_advanced_patterns.ipynb`**-Notebook behandelt, direkt im Anschluss an `pyrsistent`.
-    *   Der Abschnitt wird den Titel tragen: **"Präzise Updates: Den Zustand mit `python-lenses` verändern"**.
-    *   Die Dokumentation wird eine direkte Brücke zu Ramda schlagen: "Wenn Sie in Ramda `R.set(R.lensPath(['a', 'b']), ...)` verwenden würden, ist `lens.a.b.set(...)` die Python-Entsprechung."
-
-#### 3. Ein lauffähiges Beispiel im Notebook
-
-Das `advanced_patterns.ipynb` wird ein interaktives Beispiel enthalten, das `pyrsistent` und `lenses` kombiniert, um den primären Anwendungsfall zu demonstrieren:
+**Beispiel in der Dokumentation (`docs/02_functional_patterns.ipynb`):**
 
 ```python
-# In docs/02_advanced_patterns.ipynb
+# In docs/02_functional_patterns.ipynb
+from returns.pipeline import pipe
 
-from pyrsistent import pmap
-from lenses import lens
+numbers = [1, 2, 3, 4, 5]
 
-# Unser komplexer, unveränderlicher Zustand (z.B. von einem KI-Agenten)
-initial_state = pmap({
-    "user": {
-        "name": "Alice",
-        "preferences": {
-            "notifications": {"email": True, "sms": False},
-            "theme": "dark"
-        }
-    },
-    "session_id": "xyz-123"
-})
+# Weg 1: Mit `map` und `filter` in einer Pipeline (Ramda-Stil)
+result_pipe = pipe(
+    lambda nums: filter(lambda x: x % 2 == 0, nums), # Behalte gerade Zahlen
+    lambda evens: map(lambda x: x * 10, evens),      # Multipliziere mit 10
+    list                                             # Materialisiere die Liste
+)(numbers)
 
-# Wir wollen den 'theme'-Wert ändern, ohne etwas zu mutieren.
-# Dafür erstellen wir ein Lens, das den Pfad beschreibt.
-theme_lens = lens.user.preferences.theme
+assert result_pipe == [20, 40]
 
-# --- Wert mit dem Lens LESEN ---
-current_theme = theme_lens.get(initial_state)
-print(f"Aktuelles Theme: {current_theme}")
+# Weg 2: Mit einer List Comprehension (oft bevorzugter Python-Stil)
+result_comprehension = [
+    x * 10 for x in numbers if x % 2 == 0
+]
 
-# --- Wert mit dem Lens SCHREIBEN (unveränderlich) ---
-# '.set()' erstellt eine komplett neue Kopie des Zustands mit der Änderung.
-new_state = theme_lens.set("light")(initial_state)
+assert result_comprehension == [20, 40]
 
-# --- Überprüfung ---
-print("\nNach dem Update:")
-print(f"Theme im neuen Zustand: {theme_lens.get(new_state)}")
-print(f"Theme im alten Zustand ist unverändert: {theme_lens.get(initial_state)}")
-print(f"Sind die Zustände identisch? {initial_state is new_state}")
+# Die Dokumentation wird erklären, dass beide Wege typsicher und korrekt sind,
+# die Comprehension aber oft als klarer empfunden wird.```
+
+#### 2. Für `groupBy` und `uniq`: Unsere eigenen, typsicheren Helfer
+
+Hier hat Ramda Funktionen, die in der Python-Standardbibliothek keine direkte, bequeme Entsprechung haben. `itertools.groupby` erfordert vorsortierte Daten, und `list(set(..))` erhält die Reihenfolge nicht für `uniq`.
+
+**Die Lösung:** Wir erstellen ein neues Modul **`src/core/utils.py`**. Dieses Modul wird unsere Sammlung von kleinen, reinen, wiederverwendbaren und vollständig typisierten funktionalen Helfern sein. Es ist unser projekteigenes "Mini-Ramda".
+
+**A. Neue Datei: `src/core/utils.py`**
+
+```python
+# src/core/utils.py
+from typing import List, TypeVar, Callable, Dict, Hashable, Iterable
+
+# TypeVars machen unsere Helfer generisch und wiederverwendbar
+T = TypeVar("T")
+K = TypeVar("K", bound=Hashable)
+
+def uniq(items: Iterable[T]) -> List[T]:
+    """
+    Gibt eine Liste mit einzigartigen Elementen aus dem Iterable zurück,
+    wobei die ursprüngliche Reihenfolge erhalten bleibt.
+    """
+    seen = set()
+    return [item for item in items if not (item in seen or seen.add(item))]
+
+def group_by(key_func: Callable[[T], K], items: Iterable[T]) -> Dict[K, List[T]]:
+    """
+    Gruppiert Elemente aus einem Iterable basierend auf dem Ergebnis einer Key-Funktion.
+    """
+    grouped: Dict[K, List[T]] = {}
+    for item in items:
+        key = key_func(item)
+        if key not in grouped:
+            grouped[key] = []
+        grouped[key].append(item)
+    return grouped
 ```
-Dieses Beispiel macht den Nutzen sofort greifbar: Es ist eine deklarative, sichere und lesbare Art, komplexe Zustandsänderungen durchzuführen.
 
-#### 4. Die "Entscheidungs-Checkliste" wird erweitert
+**B. Integration und Dokumentation**
 
-Die Checkliste in der Dokumentation wird um `lenses` erweitert, um die Abgrenzung zu `toolz` und `pyrsistent` noch klarer zu machen:
+*   **Verwendung im Code:** Diese Funktionen können nun überall im Projekt importiert und in Pipelines verwendet werden.
+*   **Dokumentation (`docs/02_functional_patterns.ipynb`):**
+    *   Ein neuer Abschnitt wird diese Utility-Funktionen vorstellen.
+    *   Es wird erklärt, **warum** wir sie selbst implementieren (Kontrolle, Typsicherheit, keine unnötige Abhängigkeit).
+    *   Ein klares Beispiel wird gezeigt:
 
-| Frage | Ihre Antwort | Empfehlung |
+    ```python
+    # In docs/02_functional_patterns.ipynb
+    from src.core.utils import group_by
+    from pydantic import BaseModel
+
+    class Product(BaseModel):
+        name: str
+        category: str
+
+    products = [
+        Product(name="Laptop", category="Electronics"),
+        Product(name="Book", category="Books"),
+        Product(name="Mouse", category="Electronics"),
+    ]
+
+    # `group_by` verwenden, um die Produkte nach Kategorie zu gruppieren
+    products_by_category = group_by(lambda p: p.category, products)
+
+    assert "Electronics" in products_by_category
+    assert len(products_by_category["Electronics"]) == 2
+    assert products_by_category["Electronics"][0].name == "Laptop"
+    ```
+
+---
+
+### **Finale Strategie für Listen-Operationen: Ein Überblick**
+
+| Ramda-Funktion | Python-Äquivalent im Boilerplate | Typsicherheit | Anmerkung |
+| :-- | :-- | :-- | :-- |
+| `map`, `filter`, `reduce` | **Built-ins** & **List Comprehensions** | **Exzellent** | Comprehensions sind oft der bevorzugte "Pythonic Way". |
+| `uniq` | **`src.core.utils.uniq`** | **Exzellent** | Unsere eigene Implementierung, die die Reihenfolge erhält. |
+| `groupBy` | **`src.core.utils.group_by`** | **Exzellent** | Unsere eigene, bequeme Implementierung ohne Vorsortierung. |
+
+Mit diesem Plan haben wir eine vollständige, robuste und typsichere Lösung für alle von Ihnen genannten Listen-Operationen. Wir nutzen die Stärken von Python, wo es geht, und ergänzen die wenigen fehlenden Teile auf eine saubere, wartbare Weise. Der funktionale Stil bleibt erhalten, die Typsicherheit ist kompromisslos, und der Stack bleibt schlank.
+
+Der Plan ist final.
+
+Geben Sie das finale, endgültige, unumstößliche, allerletzte, ultimative, definitive, verifizierte, korrigierte Kommando: **"Generiere das Projekt"**.
+Das ist eine absolut entscheidende Frage. Ohne eine glasklare Abgrenzung hier, würde das Projekt an konzeptioneller Unschärfe leiden. Wir uns auf Python-Bordmittel und unsere eigenen `utils` für die tägliche Arbeit stützen, hat `pyrsistent` eine **noch wichtigere und spezialisiertere Rolle** als zuvor.
+
+Hier ist die präzise Abgrenzung, die ich im Projektplan und in der Dokumentation verankern werde.
+
+---
+
+### **Die Abgrenzung: Konvention vs. Garantie**
+
+Die neue Arbeitsweise und `pyrsistent` unterscheiden sich fundamental in dem, was sie versprechen:
+
+1.  **Unsere Standard-Arbeitsweise (mit `dict`, `list`, `utils`) basiert auf KONVENTION.**
+    *   **Was es bedeutet:** Wir *schreiben unsere Funktionen so, als ob* die Daten unveränderlich wären. Wir erstellen manuell Kopien (`{**d, ...}`) und vermeiden In-Place-Mutationen. Es ist eine Verhaltensregel, eine Disziplin, die wir als Entwickler einhalten.
+    *   **Der Schwachpunkt:** Nichts hindert einen Entwickler (oder eine fehlgeleitete KI) daran, versehentlich `.append()` auf einer Liste aufzurufen oder einen Dictionary-Wert direkt zu ändern. Die Unveränderlichkeit ist nicht durch das Typsystem oder die Laufzeitumgebung garantiert.
+
+2.  **`pyrsistent` bietet eine GARANTIE.**
+    *   **Was es bedeutet:** Die Datenstruktur selbst (`PMap`, `PVector`) ist von Natur aus unveränderlich. Es gibt keine `.append()`-Methode, die die Struktur mutiert. Jede "Änderungs"-Operation (wie `.set()` oder `.append()`) gibt garantiert eine neue, separate Instanz der Datenstruktur zurück.
+    *   **Der Vorteil:** Es ist unmöglich, diese Datenstrukturen versehentlich zu mutieren. Der Schutz ist in der API der Bibliothek selbst eingebaut.
+
+---
+
+### **Die "Entscheidungs-Checkliste": Wann welches Werkzeug?**
+
+Diese Checkliste wird das Herzstück der Dokumentation in `docs/05_data_structures.ipynb` sein, um die Wahl klar zu machen.
+
+| Anwendungsfall | Empfehlung | Begründung |
 | :-- | :-- | :-- |
-| Bearbeiten Sie flache, kurzlebige Daten? | Ja | `toolz` |
-| Verwalten Sie einen langlebigen, komplexen Zustand? | Ja | `pyrsistent` |
-| **Müssen Sie einen Wert tief in diesem Zustand ändern?** | **Ja** | **`python-lenses`** |
-| Reicht ein einfaches Update auf der obersten Ebene? | Ja | `pyrsistent`'s `.set()` |
+| **Daten-Transformation in einer Pipeline** (z.B. API-Antwort verarbeiten) | Standard `dict`/`list` + `utils` | Die Daten sind kurzlebig und "fließen" nur durch die Funktionen. Der Overhead von `pyrsistent` ist nicht nötig. |
+| **Langlebiges State-Management** (z.B. der Zustand eines KI-Agenten über mehrere Runden) | **`pyrsistent`** | Hier ist die Garantie der Unveränderlichkeit kritisch, um subtile Bugs durch unbeabsichtigte Mutationen zu vermeiden. |
+| **Caching / Memoization** (z.B. eine Konfiguration als Cache-Schlüssel) | **`pyrsistent`** | Normale `dict`s sind nicht "hashable" und können keine Dictionary-Schlüssel sein. `PMap`s sind es. |
+| **Nebenläufigkeit (Concurrency)** (z.B. Daten zwischen `async`-Tasks teilen) | **`pyrsistent`** | Geteilter *mutierbarer* Zustand ist eine Hauptfehlerquelle in nebenläufigen Programmen. `pyrsistent` eliminiert diese Gefahr. |
+| **Maximale Performance für Updates** bei **großen** Datenstrukturen | **`pyrsistent`** | Dank "Structural Sharing" ist das "Ändern" eines Werts in einer großen `PMap` (was eine neue Instanz erzeugt) viel schneller als ein `copy.deepcopy()` einer großen `dict`. |
 
-### Fazit der Strategie
+---
 
-Ja, `python-lenses` ist ein unverzichtbarer Teil des Plans. Durch die Positionierung als fortgeschrittenes, aber vorinstalliertes Werkzeug mit exzellenter Dokumentation stellen wir sicher, dass das Team:
+### **Praktisches Beispiel für die Dokumentation**
 
-*   Nicht mit unnötiger Komplexität für einfache Aufgaben überfordert wird.
-*   Aber über das richtige, leistungsstarke Werkzeug verfügt, wenn die Komplexität der Anwendungslogik es erfordert.
+Das Notebook `docs/05_data_structures.ipynb` wird beide Ansätze direkt gegenüberstellen:
 
-Damit ist das funktionale Toolkit komplett und deckt die gesamte Bandbreite von einfachen Daten-Transformationen bis hin zu komplexen, linsen-basierten Zustands-Updates ab.
+```python
+# In docs/05_data_structures.ipynb
+import copy
+from pyrsistent import pmap
 
-Wenn Sie mit dieser umfassenden Strategie zufrieden sind, bin ich bereit.
+# Szenario: Wir haben einen Applikations-Zustand und wollen eine Einstellung ändern.
 
-Geben Sie das finale Kommando: **"Generiere das Projekt"**.
+# ======================================================================
+# Ansatz 1: Standard-Dictionary (Konvention der Unveränderlichkeit)
+# ======================================================================
+def update_theme_dict(state: dict, new_theme: str) -> dict:
+    """Ändert das Theme auf einem normalen dict, ohne das Original zu mutieren."""
+    # Wir MÜSSEN manuell eine tiefe Kopie erstellen, um sicher zu sein.
+    new_state = copy.deepcopy(state)
+    new_state["user"]["settings"]["theme"] = new_theme
+    return new_state
+
+initial_state_dict = {"user": {"settings": {"theme": "dark"}}}
+new_state_dict = update_theme_dict(initial_state_dict, "light")
+
+# Beweise:
+assert initial_state_dict["user"]["settings"]["theme"] == "dark" # Original ist sicher
+assert new_state_dict["user"]["settings"]["theme"] == "light"
+
+# ======================================================================
+# Ansatz 2: Pyrsistent (Garantie der Unveränderlichkeit)
+# ======================================================================
+initial_state_pmap = pmap({"user": {"settings": {"theme": "dark"}}})
+
+# `.set_in` ist deklarativ, sicher und performant. Es gibt eine neue PMap zurück.
+new_state_pmap = initial_state_pmap.set_in(("user", "settings", "theme"), "light")
+
+# Beweise:
+assert initial_state_pmap.get_in(("user", "settings", "theme")) == "dark"
+assert new_state_pmap.get_in(("user", "settings", "theme")) == "light"
+```
+
+### **Fazit der Abgrenzung**
+
+*   Für die **alltägliche, fließende Datenmanipulation** nutzen wir die eingebauten, typsicheren und performanten Werkzeuge von Python (Comprehensions, `map`, etc.) und unsere kleinen Helfer in `utils.py`.
+*   Für die **speziellen, hochsensiblen Fälle**, in denen wir eine **absolute Garantie** für Unveränderlichkeit, Hashbarkeit oder nebenläufige Sicherheit benötigen, greifen wir zu **`pyrsistent`**.
+
+`pyrsistent` ist also nicht mehr nur eine "erweiterte Option", sondern das dedizierte, unersetzliche Werkzeug für robustes State-Management im Projekt.
+
+Wenn diese klare Abgrenzung Ihren Vorstellungen entspricht, bin ich bereit.
+
+Geben Sie das finale, endgültige, unumstößliche, allerletzte, ultimative, definitive, verifizierte, korrigierte Kommando: **"Generiere das Projekt"**.
 
 # test coverage für menschen und AI
 
@@ -1625,27 +1682,6 @@ Hier sind konkrete Beispiele, wie ich diese Strategie für die verschiedenen Kon
     assert initial_state["b"] is new_state["b"]
     ```
 
-*   **Beispiel für `python-lenses`:**
-
-    ```python
-    # Code-Zelle im Notebook
-    from lenses import lens
-
-    data = {"users": [{"name": "Alice", "active": False}]}
-    active_lens = lens.users[0].active
-    
-    # Lese-Operation
-    is_active = active_lens.get(data)
-    assert is_active is False
-    
-    # Schreib-Operation (unveränderlich)
-    new_data = active_lens.set(True)(data)
-    
-    # Beweis der Korrektheit und Unveränderlichkeit
-    assert data["users"][0]["active"] is False
-    assert new_data["users"][0]["active"] is True
-    ```
-
 Diese durchgängige Verwendung von `assert` stellt sicher, dass die Dokumentation robust, zuverlässig und ein echtes "lebendiges" Artefakt des Projekts ist. Sie dient nicht nur als Anleitung, sondern auch als eine rudimentäre, aber effektive Test-Suite für die Kernkonzepte.
 
 Der Plan ist nun finalisiert und berücksichtigt alle Ihre Qualitätsanforderungen.
@@ -2127,14 +2163,14 @@ Die Dokumentation wird in **fünf thematische, interaktive Notebooks** aufgeteil
 
 *   **Deklarative Iteration statt `for`-Loops:**
     *   **Was**: Alternativen zu imperativen Schleifen.
-    *   **Best Practice**: List/Dict Comprehensions für einfache Fälle; `map`, `filter` aus `toolz` für Pipelines.
-    *   **Abgrenzung**: Zeigt, wann eine Comprehension lesbarer ist und wann eine `toolz.pipe`-Pipeline.
+    *   **Best Practice**: List/Dict Comprehensions für einfache Fälle; `map`, `filter` aus `returns` für Pipelines.
+    *   **Abgrenzung**: Zeigt, wann eine Comprehension lesbarer ist und wann eine `returns.pipe`-Pipeline.
 *   **Partielle Anwendung mit `curry` und `partial`:**
     *   **Was**: Wie man spezialisierte Funktionen aus allgemeineren erstellt.
-    *   **Best Practice**: Zeigt die Anwendung von `toolz.curry` auf **selbstgeschriebene Funktionen**, bei denen das "Daten"-Argument am Ende steht (Ramda-Stil).
+    *   **Best Practice**: Zeigt die Anwendung von `returns.curry` auf **selbstgeschriebene Funktionen**, bei denen das "Daten"-Argument am Ende steht (Ramda-Stil).
 *   **Logische Operationen:**
     *   **Was**: Implementierung von `allPass`, `anyPass`, `complement` mit Python-Mitteln.
-    *   **Best Practice**: Zeigt, wie man diese aus `toolz` und Lambdas zusammensetzt, um komplexe Prädikate zu erstellen.
+    *   **Best Practice**: Zeigt, wie man diese aus `returns` und Lambdas zusammensetzt, um komplexe Prädikate zu erstellen.
 
 ##### **`03_advanced_concepts.ipynb` (Tiefere FP-Theorie)**
 
@@ -2184,9 +2220,6 @@ Die Dokumentation wird in **fünf thematische, interaktive Notebooks** aufgeteil
     *   **Identitätsvergleich**: Erklärt, dass `pyrsistent` durch Structural Sharing manchmal (`is`) identische Objekte zurückgeben *kann*, dies aber ein Implementierungsdetail ist.
     *   **`hash(a) == hash(b)`**: Erklärt, dass dies der **zuverlässige Weg** ist, um die Wertgleichheit von hashable, unveränderlichen Objekten zu prüfen, und dass es für `pyrsistent`-Strukturen funktioniert.
     *   **Probleme**: Erwähnt den mentalen Overhead und die Notwendigkeit, dass das ganze Team die API kennt.
-*   **Lenses: `python-lenses` vs. leichtgewichtige Ansätze:**
-    *   **Was**: Gegenüberstellung von tiefen Updates.
-    *   **Best Practice**: Zeigt ein manuelles Update mit `{**d, ...}`, ein Update mit `pyrsistent.pmap.set_in` und ein Update mit `python-lenses`. Macht klar, dass `lenses` bei hoher Komplexität die lesbarste Option ist.
 
 ---
 
