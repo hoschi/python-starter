@@ -10,12 +10,12 @@ from src.core.logging_config import setup_logging
 from src.core.services import example_transform_service, get_user_details
 from src.entrypoints.api import InMemoryUserFetcher  # Reusing the same fetcher for demo
 
-app = typer.Typer()
-console = Console()
+app: typer.Typer = typer.Typer()
+console: Console = Console()
 
 
 @app.command()
-def transform(text: str):
+def transform(text: str) -> None:
     """
     Transforms a given text using the core service function.
     """
@@ -26,10 +26,12 @@ def transform(text: str):
             console.print(f"[bold green]Success:[/] {transformed_text}")
         case Failure(error):
             console.print(f"[bold red]Error:[/] {error}")
+        case _:
+            pass
 
 
 @app.command()
-def get_user(user_id: int):
+def get_user(user_id: int) -> None:
     """
     Retrieves and displays user information by ID.
     """
@@ -50,9 +52,11 @@ def get_user(user_id: int):
             console.print(table)
         case Failure(error):
             console.print(f"[bold red]Error:[/] {error}")
+        case _:
+            pass
 
 
-def main():
+def main() -> None:
     setup_logging()
     app()
 

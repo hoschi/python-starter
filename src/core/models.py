@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Any
 
 from pydantic import BaseModel, Field
 
@@ -22,4 +22,4 @@ class ApiResponse(BaseModel):
     """A generic API response model."""
 
     status: str
-    data: dict | None = None
+    data: dict[str, Any] | None = None

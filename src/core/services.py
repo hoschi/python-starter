@@ -6,22 +6,29 @@ from src.core.models import User
 from src.core.protocols import Fetcher
 
 
-def example_transform_service(text: str) -> Result[str, Exception]:
+def example_transform_service(text: str) -> Result[str, ValueError]:
     """
     An example of a pure function pipeline for data transformation.
     This function is easily testable and has no side effects.
     """
     logger.debug(f"Transforming text: '{text}'")
     try:
-        transformed_text = pipe(
+        # Typisierung für pipe und Lambdas
+        def str_strip(s: str) -> str:
+            return s.strip()
+
+        def str_lower(s: str) -> str:
+            return s.lower()
+
+        transformed_text: str = pipe(
             text,
-            lambda s: s.strip(),
-            lambda s: s.lower(),
+            str_strip,
+            str_lower,
         )
         return Success(f"transformed: {transformed_text}")
     except Exception as e:
         logger.error(f"Transformation failed for text: '{text}' with error: {e}")
-        return Failure(e)
+        return Failure(ValueError(str(e)))
 
 
 # Richtig: Wir nutzen Dependency Inversion und programmieren gegen den abstrakten Fetcher-Protocol.

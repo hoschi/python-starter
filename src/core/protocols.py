@@ -3,8 +3,8 @@ from typing import Protocol, TypeVar
 from src.core.models import User
 
 # TypeVars for generic keys and return values
-KeyType = TypeVar("KeyType")
-ReturnType = TypeVar("ReturnType")
+KeyType = TypeVar("KeyType", contravariant=True)
+ReturnType = TypeVar("ReturnType", covariant=True)
 
 
 class Fetcher(Protocol[KeyType, ReturnType]):

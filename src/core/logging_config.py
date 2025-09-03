@@ -5,7 +5,7 @@ from loguru import logger
 from src.core.config import settings
 
 
-def setup_logging():
+def setup_logging() -> None:
     """Configures the Loguru logger based on application settings."""
     logger.remove()  # Remove default handler to reconfigure cleanly.
 

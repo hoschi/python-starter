@@ -1,3 +1,6 @@
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
+
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from loguru import logger
@@ -23,34 +26,39 @@ class InMemoryUserFetcher:
         return self._users.get(key)
 
 
-app = FastAPI()
-user_fetcher = InMemoryUserFetcher()  # Instance is created here
+user_fetcher: InMemoryUserFetcher = InMemoryUserFetcher()  # Instance is created here
 
 
-@app.on_event("startup")
-def startup_event():
+# Lifespan-Handler statt deprecated on_event
+@asynccontextmanager
+async def lifespan(_: object) -> AsyncGenerator[None, None]:
     setup_logging()
     logger.info("FastAPI application starting up...")
+    yield
+
+
+app: FastAPI = FastAPI(lifespan=lifespan)
 
 
 @app.get("/users/{user_id}", response_model=User)
-async def read_user(user_id: int):
+async def read_user(user_id: int) -> User:
     """
     API endpoint to retrieve a user by their ID.
     It uses the core service function to fetch the data.
     """
-    # The concrete instance is passed to the service function here
     result = await get_user_details(user_fetcher, user_id)
-
     match result:
         case Success(user):
             return user
         case Failure(error_message):
             raise HTTPException(status_code=404, detail=error_message)
+        case _:
+            # Fallback, falls Result nicht Success/Failure ist
+            raise HTTPException(status_code=500, detail="Unbekannter Fehler")
 
 
 @app.get("/transform/")
-async def transform_text(text: str):
+async def transform_text(text: str) -> dict[str, str]:
     """API endpoint to demonstrate a simple transformation service."""
     result = example_transform_service(text)
     match result:
@@ -58,9 +66,11 @@ async def transform_text(text: str):
             return {"original": text, "transformed": transformed_text}
         case Failure(error):
             raise HTTPException(status_code=400, detail=str(error))
+        case _:
+            raise HTTPException(status_code=500, detail="Unbekannter Fehler")
 
 
-def main():
+def main() -> None:
     """Main function to run the FastAPI application."""
     uvicorn.run(app, host="0.0.0.0", port=8000)
 

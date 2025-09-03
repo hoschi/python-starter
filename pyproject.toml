@@ -94,6 +94,7 @@ reportUnknownParameterType = "error"
 reportMissingModuleSource = "error"
 reportUnusedVariable = "error"
 reportUnusedImport = "error"
+reportMissingTypeStubs = "warning"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
