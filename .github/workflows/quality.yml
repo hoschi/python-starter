@@ -1,0 +1,46 @@
+name: Code Quality Check
+
+on: [push, pull_request]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+          poetry config virtualenvs.in-project true
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run Linter (Ruff)
+        run: poetry run ruff check .
+
+      - name: Run Formatter Check (Ruff)
+        run: poetry run ruff format --check .
+
+      - name: Run Static Type Checking (BasedPyright)
+        run: poetry run basedpyright --verifytypes src
+
+      - name: Run Import Cycle Check (Pylint)
+        run: poetry run pylint src
+
+      - name: Run Tests with Coverage
+        run: poetry run pytest
+
+      - name: Upload Coverage Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: |
+            htmlcov/
+            coverage.xml
