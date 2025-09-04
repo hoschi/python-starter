@@ -17,6 +17,7 @@ This project is a highly opinionated, modern blueprint for building robust, type
 ### 1. Prerequisites
 - [Conda](https://docs.conda.io/en/latest/miniconda.html) for environment management.
 - [Poetry](https://python-poetry.org/docs/#installation) for package management.
+- [Poe the Poet](https://poethepoet.natn.io/installation.html) for task management.
 
 ### 2. Installation
 

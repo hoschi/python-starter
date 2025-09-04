@@ -44,6 +44,7 @@ jupyter = "^1.0.0"
 # Import cycle detection
 pylint = "^3.2.5"
 mypy = "^1.17.1"
+poethepoet = "^0.37.0"
 
 [tool.poetry.scripts]
 start-api = "src.entrypoints.api:main"
@@ -81,6 +82,10 @@ ignore = ["E501"] # Line length is handled by the formatter
 "src/core/__init__.py" = ["F401"]
 "src/entrypoints/__init__.py" = ["F401"]
 "tests/__init__.py" = ["F401"]
+
+[tool.pylint]
+disable = "all"
+enable = "cyclic-import"
 
 [tool.mypy]
 plugins = ["returns.contrib.mypy.returns_plugin"]
@@ -127,6 +132,19 @@ omit = [
     "./src/core/logging_config.py",
 ]
 
-[tool.pylint]
-disable = "all"
-enable = "cyclic-import"
+[tool.poe.tasks]
+format = "ruff format ."
+lint = "ruff check --fix ."
+typecheck-basedpyright = "basedpyright"
+typecheck-mypy = "mypy src"
+test = "pytest"
+
+check-all = [
+    "format",
+    "lint",
+    "typecheck-basedpyright",
+    "typecheck-mypy",
+    "test"
+]
+typecheck = ["typecheck-basedpyright", "typecheck-mypy"]
+quick-check = ["format", "lint", "typecheck-basedpyright"]

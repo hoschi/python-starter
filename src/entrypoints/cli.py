@@ -52,8 +52,11 @@ def get_user(user_id: int) -> None:
             table.add_row("Name", user.name)
             table.add_row("Age", str(user.age))
             console.print(table)
+        case Failure(error):
+            console.print(f"[bold red]Error:[/] {error}")
         case _:  # pragma: no cover
-            assert_type(result, "Never")
+            console.print(f"[bold red]Error:[/] {result}")
+            Failure(f"This should never happen: {result}")
 
 
 def main() -> None:  # pragma: no cover
