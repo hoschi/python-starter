@@ -15,8 +15,9 @@
     "python.languageServer": "None",
     // Disables Microsoft's default server (Pylance) to let our specialized `BasedPyright` server take full control.
 
-    "python.analysis.typeCheckingMode": "off",
     // Turns off the built-in type checking of the Python plugin to avoid duplicate error messages.
+    "python.analysis.typeCheckingMode": "off",
+    "python.linting.mypyEnabled": false,
 
     // ======================================================================
     // 3. Formatting & Linting with Ruff

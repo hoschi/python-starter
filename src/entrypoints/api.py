@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from loguru import logger
-from returns.result import Failure, Success
+from returns.result import Failure, Result, Success
 
 from src.core.logging_config import setup_logging
 from src.core.models import User
@@ -46,7 +46,7 @@ async def read_user(user_id: int) -> User:
     API endpoint to retrieve a user by their ID.
     It uses the core service function to fetch the data.
     """
-    result = await get_user_details(user_fetcher, user_id)
+    result: Result[User, str] = await get_user_details(user_fetcher, user_id)
     match result:
         case Success(user):
             return user

@@ -29,7 +29,10 @@ jobs:
         run: poetry run ruff format --check .
 
       - name: Run Static Type Checking (BasedPyright)
-        run: poetry run basedpyright --verifytypes src
+        run: poetry run basedpyright src/
+
+      - name: Run Static Type Checking (MyPy)
+        run: poetry run mypy src/
 
       - name: Run Import Cycle Check (Pylint)
         run: poetry run pylint src

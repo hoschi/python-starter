@@ -9,7 +9,7 @@ packages = [{include = "src"}]
 [tool.poetry.dependencies]
 python = "^3.12"
 # Core functional libraries
-returns = "^0.23.0"
+returns = {extras = ["compatible-mypy"], version = "^0.26.0"}
 # Data validation and settings management
 pydantic = "^2.8.2"
 pydantic-settings = "^2.3.4"
@@ -43,6 +43,7 @@ ruff = "^0.5.0"
 jupyter = "^1.0.0"
 # Import cycle detection
 pylint = "^3.2.5"
+mypy = "^1.17.1"
 
 [tool.poetry.scripts]
 start-api = "src.entrypoints.api:main"
@@ -80,6 +81,19 @@ ignore = ["E501"] # Line length is handled by the formatter
 "src/core/__init__.py" = ["F401"]
 "src/entrypoints/__init__.py" = ["F401"]
 "tests/__init__.py" = ["F401"]
+
+[tool.mypy]
+plugins = ["returns.contrib.mypy.returns_plugin"]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+strict = true
+show_error_codes = true
+files = ["src/"]
 
 [tool.basedpyright]
 include = ["src", "tests"]

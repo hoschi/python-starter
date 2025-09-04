@@ -13,7 +13,7 @@ def example_transform_service(text: str) -> Result[str, ValueError]:
     """
     logger.debug(f"Transforming text: '{text}'")
     try:
-        transformed_text: str = pipe(text, lambda s: s.strip(), lambda s: s.lower())  # pyright: ignore
+        transformed_text: str = pipe(lambda s: s.strip(), lambda s: s.lower())(text)  # pyright: ignore
         return Success(f"transformed: {transformed_text}")
     except AttributeError:
         # This will happen if the input `text` is not a string.
