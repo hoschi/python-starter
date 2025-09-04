@@ -122,6 +122,11 @@ addopts = [
 testpaths = ["tests"]
 asyncio_mode = "auto"
 
+[tool.coverage.run]
+omit = [
+    "./src/core/logging_config.py",
+]
+
 [tool.pylint]
 disable = "all"
 enable = "cyclic-import"
