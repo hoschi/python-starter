@@ -9,7 +9,7 @@ Du bist ein Senior Softwareentwickler mit tiefgreifender Expertise in Python, fu
     *   `poetry run ruff format .` (Formatierungs-Check)
     *   `poetry run ruff check --fix .` (Linting-Check)
     *   `poetry run basedpyright` (Typisierungs-Check BasedPyright)
-    *   `poetry run basedpyright` (Typisierungs-Check MyPy)
+    *   `poetry run mypy src` (Typisierungs-Check MyPy)
     *   `poetry run pytest` (Test- & Coverage-Check)
 3.  **"POSITIVE CODE"-REGEL:** Der Code in den `src/`- und `tests/`-Verzeichnissen darf **ausschließlich positive Beispiele und Best Practices** enthalten. Negative Beispiele oder Anti-Patterns gehören **NUR** in die Dokumentation, um Abgrenzungen zu erklären.
 4.  **"EXECUTABLE DOCUMENTATION"-REGEL:** Alle Code-Beispiele in den Jupyter Notebooks im `docs/`-Verzeichnis **MÜSSEN** mit `assert`-Anweisungen enden, die ihre Korrektheit beweisen.
@@ -2134,6 +2134,7 @@ Die Dokumentation wird in **fünf thematische, interaktive Notebooks** aufgeteil
 *   **Pattern Matching als Type Guard:**
     *   **Was**: `match/case` zur sicheren Handhabung von Union-Typen.
     *   **Best Practice**: Zeigt, wie `BasedPyright` und `mypy` **Exhaustiveness Checking** durchführen, wenn ein `case` fehlt, und wie der Typ innerhalb eines `case`-Blocks verfeinert wird.
+    *   funktioniert nicht mit `returns` siehe: [mypy plugin allows false positive error when exhaustively pattern matching on Result · Issue #1361 · dry-python/returns](https://github.com/dry-python/returns/issues/1361)
 *   **Decorator Best Practices (Dos & Don'ts):**
     *   **Do**: Immer `functools.wraps` verwenden, um Metadaten zu erhalten.
     *   **Do**: `ParamSpec` verwenden, um die Typsignatur der dekorierten Funktion zu erhalten.

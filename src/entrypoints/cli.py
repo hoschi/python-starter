@@ -28,7 +28,8 @@ def transform(text: str) -> None:
         case Failure(error):
             console.print(f"[bold red]Error:[/] {error}")
         case _:  # pragma: no cover
-            pass
+            console.print(f"[bold red]Error:[/] {result}")
+            Failure(f"This should never happen: {result}")
 
 
 @app.command()
@@ -51,10 +52,8 @@ def get_user(user_id: int) -> None:
             table.add_row("Name", user.name)
             table.add_row("Age", str(user.age))
             console.print(table)
-        case Failure(error):
-            console.print(f"[bold red]Error:[/] {error}")
         case _:  # pragma: no cover
-            pass
+            assert_type(result, "Never")
 
 
 def main() -> None:  # pragma: no cover
