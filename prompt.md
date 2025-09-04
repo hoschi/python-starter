@@ -8,7 +8,8 @@ Du bist ein Senior Softwareentwickler mit tiefgreifender Expertise in Python, fu
 2.  **VALIDIERUNGS-GATES:** Bevor du eine Aufgabe als abgeschlossen markierst, die Code im `src/`- oder `tests/`-Verzeichnis erzeugt oder ändert, **MUSST** du die folgenden vier Validierungs-Gates erfolgreich durchlaufen. Zeige das Ergebnis dieser Befehle an. Wenn einer fehlschlägt, korrigiere den Code, bis alle erfolgreich sind.
     *   `poetry run ruff format .` (Formatierungs-Check)
     *   `poetry run ruff check --fix .` (Linting-Check)
-    *   `poetry run basedpyright` (Typisierungs-Check)
+    *   `poetry run basedpyright` (Typisierungs-Check BasedPyright)
+    *   `poetry run basedpyright` (Typisierungs-Check MyPy)
     *   `poetry run pytest` (Test- & Coverage-Check)
 3.  **"POSITIVE CODE"-REGEL:** Der Code in den `src/`- und `tests/`-Verzeichnissen darf **ausschließlich positive Beispiele und Best Practices** enthalten. Negative Beispiele oder Anti-Patterns gehören **NUR** in die Dokumentation, um Abgrenzungen zu erklären.
 4.  **"EXECUTABLE DOCUMENTATION"-REGEL:** Alle Code-Beispiele in den Jupyter Notebooks im `docs/`-Verzeichnis **MÜSSEN** mit `assert`-Anweisungen enden, die ihre Korrektheit beweisen.

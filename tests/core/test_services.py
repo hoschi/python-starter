@@ -63,3 +63,12 @@ def test_example_transform_service_properties(s: str):
     assert result.unwrap().replace(
         "transformed: ", ""
     ).strip() == result.unwrap().replace("transformed: ", "")
+
+
+def test_example_transform_service_failure():
+    """
+    Tests the failure path of the transformation function with non-string input.
+    """
+    result = services.example_transform_service(123)  # type: ignore
+    assert isinstance(result, Failure)
+    assert isinstance(result.failure(), ValueError)
