@@ -29,9 +29,8 @@ class InMemoryUserFetcher:
 user_fetcher: InMemoryUserFetcher = InMemoryUserFetcher()  # Instance is created here
 
 
-# Lifespan-Handler statt deprecated on_event
 @asynccontextmanager
-async def lifespan(_: object) -> AsyncGenerator[None, None]:
+async def lifespan(_: object) -> AsyncGenerator[None, None]:  # pragma: no cover
     setup_logging()
     logger.info("FastAPI application starting up...")
     yield
@@ -52,8 +51,7 @@ async def read_user(user_id: int) -> User:
             return user  # type: ignore[no-any-return]
         case Failure(error_message):
             raise HTTPException(status_code=404, detail=error_message)
-        case _:
-            # Fallback, falls Result nicht Success/Failure ist
+        case _:  # pragma: no cover
             raise HTTPException(status_code=500, detail="Unbekannter Fehler")
 
 
@@ -66,14 +64,14 @@ async def transform_text(text: str) -> dict[str, str]:
             return {"original": text, "transformed": transformed_text}
         case Failure(error):
             raise HTTPException(status_code=400, detail=str(error))
-        case _:
+        case _:  # pragma: no cover
             raise HTTPException(status_code=500, detail="Unbekannter Fehler")
 
 
-def main() -> None:
+def main() -> None:  # pragma: no cover
     """Main function to run the FastAPI application."""
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

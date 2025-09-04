@@ -49,6 +49,9 @@
     "python.testing.pytestArgs": [
         "tests"
     ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+
     // Tells the Test Explorer to look for tests in the `tests` directory.
 
     // ======================================================================

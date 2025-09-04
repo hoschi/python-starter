@@ -21,13 +21,13 @@ def transform(text: str) -> None:
     Transforms a given text using the core service function.
     """
     logger.info(f"CLI command 'transform' called with text: '{text}'")
-    result = example_transform_service(text)
+    result: Result[str, ValueError] = example_transform_service(text)
     match result:
         case Success(transformed_text):
             console.print(f"[bold green]Success:[/] {transformed_text}")
         case Failure(error):
             console.print(f"[bold red]Error:[/] {error}")
-        case _:
+        case _:  # pragma: no cover
             pass
 
 
@@ -53,14 +53,14 @@ def get_user(user_id: int) -> None:
             console.print(table)
         case Failure(error):
             console.print(f"[bold red]Error:[/] {error}")
-        case _:
+        case _:  # pragma: no cover
             pass
 
 
-def main() -> None:
+def main() -> None:  # pragma: no cover
     setup_logging()
     app()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

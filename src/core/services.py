@@ -12,6 +12,10 @@ def example_transform_service(text: str) -> Result[str, ValueError]:
     This function is easily testable and has no side effects.
     """
     logger.debug(f"Transforming text: '{text}'")
+
+    # force error to be able to test this example code
+    if text == "error":
+        return Failure(ValueError(text))
     try:
         transformed_text: str = pipe(lambda s: s.strip(), lambda s: s.lower())(text)  # pyright: ignore
         return Success(f"transformed: {transformed_text}")

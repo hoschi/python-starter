@@ -5,11 +5,6 @@ from src.entrypoints.api import app
 
 
 @pytest.fixture(scope="module")
-def anyio_backend():
-    return "asyncio"
-
-
-@pytest.fixture(scope="module")
 async def test_client():
     async with AsyncClient(app=app, base_url="http://test") as client:
         yield client
@@ -42,3 +37,11 @@ async def test_transform_text_success(test_client: AsyncClient):
         "original": "  Hello World  ",
         "transformed": "transformed: hello world",
     }
+
+
+@pytest.mark.asyncio
+async def test_transform_text_error(test_client: AsyncClient):
+    """Tests the transformation endpoint."""
+    response = await test_client.get("/transform/?text=error")
+    assert response.status_code == 400
+    assert response.json() == {"detail": "error"}

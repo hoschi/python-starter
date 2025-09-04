@@ -9,6 +9,15 @@ def test_transform_command_success():
     """
     Tests the 'transform' CLI command with a sample string.
     """
+    result = runner.invoke(app, ["transform", "error"])
+    assert result.exit_code == 0
+    assert "Error:" in result.stdout
+
+
+def test_transform_command_error():
+    """
+    Tests the 'transform' CLI command with a sample string.
+    """
     result = runner.invoke(app, ["transform", "  Some Text  "])
     assert result.exit_code == 0
     assert "Success:" in result.stdout
