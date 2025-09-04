@@ -49,7 +49,7 @@ async def read_user(user_id: int) -> User:
     result: Result[User, str] = await get_user_details(user_fetcher, user_id)
     match result:
         case Success(user):
-            return user
+            return user  # type: ignore[no-any-return]
         case Failure(error_message):
             raise HTTPException(status_code=404, detail=error_message)
         case _:
