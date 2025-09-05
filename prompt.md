@@ -12,15 +12,24 @@ Du bist ein Senior Softwareentwickler mit tiefgreifender Expertise in Python, fu
 
 **III. Aufgaben**
 
-# Initialisierung (wip, hat noch Fehler!)
+# Initialisierung (wip)
 
-* erledigt
-    * conda und poetry setup
-    * beispiel code im `src/` Ordner fertig
-    * vs code setup
-* offen
-    * der `docs/` ordner noch erstellt werden und mit Inhalt gefüllt werden
-    * Validierungs Gates laufen noch nicht durch
+* **erledigt (Planungsphase):**
+    *   Projektstruktur (`src`-Layout) definiert.
+    *   Tooling-Strategie festgelegt (conda, poetry, ruff, basedpyright, pylint, pytest-cov, hypothesis, polyfactory).
+    *   Architekturprinzipien definiert (Functional Core, Dependency Inversion mit Protocols, Layered Architecture).
+    *   Core-Konzepte für die Implementierung spezifiziert (returns, pydantic, loguru, pyrsistent).
+    *   Testing-Strategie entworfen (Unit, Property-based, Mocking, Coverage).
+    *   VS Code-Setup konzipiert.
+    *   Dokumentationsstrategie festgelegt ("Executable Documentation" in Jupyter Notebooks).
+    *   KI-Assistenten-Manifest (`ai-assistants/`) geplant.
+    *   Generierung aller geplanten Dateien und Verzeichnisse.
+    *   Schreiben des Beispiel-Codes in `src/` und `tests/`.
+    *   Erstellung der Konfigurationsdateien (`pyproject.toml`, `.vscode/settings.json`, etc.).
+
+* **offen (Implementierungsphase):**
+    *   Erstellung der `docs/*.ipynb`-Notebooks mit "Executable Documentation".
+    *   Erstellung des `ai-assistants/`-Manifests.
 
 ### **Planungsübersicht: Das "Pragmatic Functional Python" Boilerplate**
 
