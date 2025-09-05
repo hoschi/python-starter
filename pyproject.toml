@@ -45,6 +45,7 @@ jupyter = "^1.0.0"
 pylint = "^3.2.5"
 mypy = "^1.17.1"
 poethepoet = "^0.37.0"
+pytest-notebook = "^0.10.0"
 nbstripout = "^0.8.1"
 
 [tool.poetry.scripts]
@@ -118,15 +119,17 @@ reportMissingTypeStubs = "warning"
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
-    "-ra", "-q",
+    "-ra",
+    "-q",
     "--cov=src",
     "--cov-report=html",
     "--cov-report=xml",
     "--cov-report=term-missing",
-    "--cov-fail-under=95"
+    "--cov-fail-under=95",
 ]
-testpaths = ["tests"]
+testpaths = ["tests", "docs"]
 asyncio_mode = "auto"
+nb_test_files = true # Sagt pytest-notebook, dass es .ipynb-Dateien als Tests behandeln soll
 
 [tool.coverage.run]
 omit = [
