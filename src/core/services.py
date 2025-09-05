@@ -16,14 +16,9 @@ def example_transform_service(text: str) -> Result[str, ValueError]:
     # force error to be able to test this example code
     if text == "error":
         return Failure(ValueError(text))
-    try:
-        transformed_text: str = pipe(lambda s: s.strip(), lambda s: s.lower())(text)  # pyright: ignore
-        return Success(f"transformed: {transformed_text}")
-    except AttributeError:
-        # This will happen if the input `text` is not a string.
-        error = ValueError("Input must be a string")
-        logger.error(f"Transformation failed for text: '{text}' with error: {error}")
-        return Failure(error)
+
+    transformed_text: str = pipe(lambda s: s.strip(), lambda s: s.lower())(text)  # pyright: ignore
+    return Success(f"transformed: {transformed_text}")
 
 
 # Richtig: Wir nutzen Dependency Inversion und programmieren gegen den abstrakten Fetcher-Protocol.

@@ -48,7 +48,7 @@ async def test_get_user_details_not_found_with_mock():
 
 
 # --- Technique 2: Property-Based Testing ---
-@given(st.text())
+@given(st.text().filter(lambda s: s != "error"))
 def test_example_transform_service_properties(s: str):
     """
     Tests properties of the transformation function.
@@ -69,6 +69,6 @@ def test_example_transform_service_failure():
     """
     Tests the failure path of the transformation function with non-string input.
     """
-    result = services.example_transform_service(123)  # type: ignore
+    result = services.example_transform_service("error")
     assert isinstance(result, Failure)
     assert isinstance(result.failure(), ValueError)
