@@ -12,7 +12,7 @@ Du bist ein Senior Softwareentwickler mit tiefgreifender Expertise in Python, fu
 
 **III. Aufgaben**
 
-# Initialisierung (wip)
+# Initialisierung (erledigt)
 
 * **erledigt (Planungsphase):**
     *   Projektstruktur (`src`-Layout) definiert.
@@ -27,7 +27,7 @@ Du bist ein Senior Softwareentwickler mit tiefgreifender Expertise in Python, fu
     *   Schreiben des Beispiel-Codes in `src/` und `tests/`.
     *   Erstellung der Konfigurationsdateien (`pyproject.toml`, `.vscode/settings.json`, etc.).
 
-* **offen (Implementierungsphase):**
+* **erledigt (Implementierungsphase):**
     *   Erstellung der `docs/*.ipynb`-Notebooks mit "Executable Documentation".
     *   Erstellung des `ai-assistants/`-Manifests.
 
