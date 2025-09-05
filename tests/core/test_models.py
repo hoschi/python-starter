@@ -6,6 +6,7 @@ from src.core.models import User
 # 1. A factory for our User model is defined
 class UserFactory(ModelFactory[User]):
     __model__ = User
+    __check_model__ = True
 
 
 def test_user_model_creation_with_factory():
