@@ -38,6 +38,9 @@ conda activate py-starter
 
 # Install dependencies using Poetry
 poetry install
+
+# add git filter for Jupyter notebooks
+poetry run nbstripout --install
 ```
 
 ## Daily Work
