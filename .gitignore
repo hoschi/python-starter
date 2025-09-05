@@ -1,0 +1,6 @@
+.coverage
+.hypothesis/
+coverage.xml
+logs/
+__pycache__
+.coverage
