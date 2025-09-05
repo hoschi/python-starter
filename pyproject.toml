@@ -129,7 +129,6 @@ addopts = [
 ]
 testpaths = ["tests", "docs"]
 asyncio_mode = "auto"
-nb_test_files = true # Sagt pytest-notebook, dass es .ipynb-Dateien als Tests behandeln soll
 
 [tool.coverage.run]
 omit = [
