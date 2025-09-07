@@ -22,14 +22,9 @@ def transform(text: str) -> None:
     """
     logger.info(f"CLI command 'transform' called with text: '{text}'")
     result: Result[str, ValueError] = example_transform_service(text)
-    match result:
-        case Success(transformed_text):
-            console.print(f"[bold green]Success:[/] {transformed_text}")
-        case Failure(error):
-            console.print(f"[bold red]Error:[/] {error}")
-        case _:  # pragma: no cover
-            console.print(f"[bold red]Error:[/] {result}")
-            Failure(f"This should never happen: {result}")
+    result.map(lambda s: console.print(f"[bold green]Success:[/] {s}")).alt(
+        lambda s: console.print(f"[bold red]Error:[/] {s}")
+    )
 
 
 @app.command()
