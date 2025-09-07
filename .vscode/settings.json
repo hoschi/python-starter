@@ -17,7 +17,9 @@
 
     // Turns off the built-in type checking of the Python plugin to avoid duplicate error messages.
     "python.analysis.typeCheckingMode": "off",
-    "python.linting.mypyEnabled": false,
+
+	// enable MyPy because this the only thing working with `returns`!
+    "python.linting.mypyEnabled": true,
 
     // ======================================================================
     // 3. Formatting & Linting with Ruff

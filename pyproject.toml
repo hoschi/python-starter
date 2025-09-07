@@ -105,16 +105,8 @@ files = ["src/"]
 [tool.basedpyright]
 include = ["src", "tests"]
 exclude = ["**/__pycache__", ".venv"]
-typeCheckingMode = "strict"
-reportUnknownVariableType = "error"
-reportUnknownArgumentType = "error"
-reportUnknownMemberType = "error"
-reportUnknownLambdaType = "error"
-reportUnknownParameterType = "error"
-reportMissingModuleSource = "error"
-reportUnusedVariable = "error"
-reportUnusedImport = "error"
-reportMissingTypeStubs = "warning"
+typeCheckingMode = "off"
+useLibraryCodeForTypes = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"

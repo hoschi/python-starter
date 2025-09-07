@@ -17,7 +17,7 @@ def example_transform_service(text: str) -> Result[str, ValueError]:
     if text == "error":
         return Failure(ValueError(text))
 
-    transformed_text: str = pipe(lambda s: s.strip(), lambda s: s.lower())(text)  # pyright: ignore
+    transformed_text: str = pipe(lambda s: s.strip(), lambda s: s.lower())(text)
     return Success(f"transformed: {transformed_text}")
 
 
