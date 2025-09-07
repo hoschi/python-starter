@@ -2,6 +2,8 @@ import asyncio
 
 import typer
 from loguru import logger
+from returns import pointfree as p
+from returns.pipeline import flow
 from returns.result import Failure, Result, Success
 from rich.console import Console
 from rich.table import Table
@@ -21,9 +23,10 @@ def transform(text: str) -> None:
     Transforms a given text using the core service function.
     """
     logger.info(f"CLI command 'transform' called with text: '{text}'")
-    result: Result[str, ValueError] = example_transform_service(text)
-    result.map(lambda s: console.print(f"[bold green]Success:[/] {s}")).alt(
-        lambda s: console.print(f"[bold red]Error:[/] {s}")
+    flow(
+        example_transform_service(text),
+        p.map_(lambda s: console.print(f"[bold green]Success:[/] {s}")),
+        p.alt(lambda s: console.print(f"[bold red]Error:[/] {s}")),
     )
 
 

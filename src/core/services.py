@@ -1,5 +1,6 @@
 from loguru import logger
-from returns.pipeline import pipe
+from returns import pointfree as p
+from returns.pipeline import flow, pipe
 from returns.result import Failure, Result, Success
 
 from src.core.models import User
@@ -13,12 +14,19 @@ def example_transform_service(text: str) -> Result[str, ValueError]:
     """
     logger.debug(f"Transforming text: '{text}'")
 
-    # force error to be able to test this example code
-    if text == "error":
-        return Failure(ValueError(text))
-
-    transformed_text: str = pipe(lambda s: s.strip(), lambda s: s.lower())(text)
-    return Success(f"transformed: {transformed_text}")
+    return flow(
+        text,
+        # force error to be able to test this example code
+        lambda s: Failure(ValueError(text)) if s == "error" else Success(s),
+        # if not do the thing!
+        p.map_(
+            pipe(
+                lambda s: s.strip(),
+                lambda s: s.lower(),
+                lambda s: f"transformed: {s}",
+            )
+        ),
+    )
 
 
 # Richtig: Wir nutzen Dependency Inversion und programmieren gegen den abstrakten Fetcher-Protocol.
