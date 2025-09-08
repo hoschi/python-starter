@@ -27,14 +27,14 @@ git clone https://github.com/<Your-GitHub-Username>/<Your-Repo-Name>.git
 cd <Your-Repo-Name>
 ```
 
-Change project name 'py-starter' to yours
+Change project name 'py-starter' to yours in these files and below
 - `pyproject.toml`
 - `conda.yml`
 
 ```bash
 # Create and activate the conda environment
 conda env create --file conda.yml
-conda activate py-starter
+conda activate py-starter # or what you picked above
 
 # Install dependencies using Poetry
 poetry install

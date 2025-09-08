@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "py-starter"
+name = "zuban-test-hoschi"
 version = "0.1.0"
 description = "A blueprint for building robust, type-safe, and maintainable Python applications with a functional approach."
 authors = ["Your Name <you@example.com>"]
@@ -47,6 +47,7 @@ mypy = "^1.17.1"
 poethepoet = "^0.37.0"
 pytest-notebook = "^0.10.0"
 nbstripout = "^0.8.1"
+zuban = "^0.0.22"
 
 [tool.poetry.scripts]
 start-api = "src.entrypoints.api:main"

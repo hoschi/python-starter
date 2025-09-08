@@ -1,4 +1,4 @@
-name: py-starter
+name: zuban-test-hoschi
 channels:
   - defaults
 dependencies:

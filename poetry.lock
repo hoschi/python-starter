@@ -3819,7 +3819,25 @@ files = [
 [package.extras]
 dev = ["black (>=19.3b0) ; python_version >= \"3.6\"", "pytest (>=4.6.2)"]
 
+[[package]]
+name = "zuban"
+version = "0.0.22"
+description = "Zuban - The Zuban Language Server"
+optional = false
+python-versions = ">=3.7"
+groups = ["dev"]
+files = [
+    {file = "zuban-0.0.22-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:0742ceef0fe5fb86be06839d698466fb3153606f6b3d1bdfadc8ee1be29b6f06"},
+    {file = "zuban-0.0.22-py3-none-macosx_11_0_arm64.whl", hash = "sha256:20a75d810d1665dc2c100a597296485c4d1e17539e7852745af4657456c8388b"},
+    {file = "zuban-0.0.22-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c493e4349f125ac641497c54d2f00f52a630424e46550b5a966e8e8f0f633cbd"},
+    {file = "zuban-0.0.22-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:54971800c76bff5b5337e765780fda1c0921ae4360987c83bf32b7d854aa99a7"},
+    {file = "zuban-0.0.22-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:7b7b0f873030287792e2fabcd78855c7daec80b17482f1fa50a8bbd8162b4fbf"},
+    {file = "zuban-0.0.22-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ce967ed36c20f3ffaf4e0b56181f49659d1b1904ebc409857815fd15cb4fdd7c"},
+    {file = "zuban-0.0.22-py3-none-win32.whl", hash = "sha256:8049fb0eabf78fa5de5fa64b54d18b8c6bb72eafad798b768c5829176ff89531"},
+    {file = "zuban-0.0.22-py3-none-win_amd64.whl", hash = "sha256:67c82dacca3e2c58fff598c1cb9af0d15442a75979878c00e7e793c500089358"},
+]
+
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "4645ee9203b086b93ef76d71790c90080569db3ac47d7ab8c72db66608a155b3"
+content-hash = "f4d5a0d5ac0cf2bc7f63ecad2ab1d5ed22695442c298f4e67933305718bba01c"
