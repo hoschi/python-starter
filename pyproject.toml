@@ -27,7 +27,7 @@ loguru = "^0.7.2"
 [tool.poetry.group.dev.dependencies]
 # Testing framework and plugins
 pytest = "^8.2.2"
-pytest-cov = "^6.0.0"
+pytest-cov = "^7.0.0"
 pytest-asyncio = "^1.0.0"
 # Test data generation
 polyfactory = "^2.16.0"
