@@ -40,7 +40,6 @@ def get_user(user_id: int) -> None:
     result: IOResultE[User] = anyio.run(
         get_user_details(user_fetcher, user_id).awaitable
     )
-
     match result:
         case IOSuccess(user):
             table: Table = Table("Attribute", "Value")

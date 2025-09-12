@@ -6,8 +6,9 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from loguru import logger
 from returns.future import future_safe
-from returns.io import IOFailure, IOResultE, IOSuccess
+from returns.io import IOResultE, IOSuccess
 from returns.result import Failure, Success
+from returns.unsafe import unsafe_perform_io
 
 from src.core.logging_config import setup_logging
 from src.core.models import User
@@ -56,13 +57,11 @@ async def read_user(user_id: int) -> User:
     result: IOResultE[User] = anyio.run(
         get_user_details(user_fetcher, user_id).awaitable
     )
-    match result:
-        case IOSuccess(user):
-            return user
-        case IOFailure(error_message):
-            raise HTTPException(status_code=404, detail=error_message)
-        case _:  # pragma: no cover
-            raise HTTPException(status_code=500, detail="Unbekannter Fehler")
+
+    if isinstance(result, IOSuccess):
+        return unsafe_perform_io(result.unwrap())
+    else:
+        raise HTTPException(status_code=404, detail=str(result.failure()))
 
 
 @app.get("/transform/")
