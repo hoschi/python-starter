@@ -18,6 +18,20 @@
     "python.analysis.completeFunctionParens": true,
     "python.analysis.inlayHints.variableTypes": false,
     "python.analysis.inlayHints.functionReturnTypes": false,
+    "python.analysis.indexing": true,
+    "python.analysis.useLibraryCodeForTypes": true,
+    "python.analysis.packageIndexDepths": [
+      {
+        "name": "", // Leer = gilt für ALLE Pakete
+        "depth": 4,
+        "includeAllSymbols": true
+      },
+      {
+        "name": "returns", // Spezifisch für returns library
+        "depth": 6,
+        "includeAllSymbols": true
+      }
+    ],
 
     // ======================================================================
     // 3. Mypy: NUR für Type-Checking beim Speichern
