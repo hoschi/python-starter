@@ -1,5 +1,7 @@
 from typing import Protocol, TypeVar
 
+from returns.future import future_safe
+
 from src.core.models import User
 
 # TypeVars for generic keys and return values
@@ -13,10 +15,11 @@ class Fetcher(Protocol[KeyType, ReturnType]):
     This could be a DB client, an API client, or an in-memory cache.
     """
 
+    @future_safe
     async def fetch_by_id(
         self, key: KeyType
     ) -> (
-        ReturnType | None
+        ReturnType
     ): ...  # The '...' is intentional; Protocols only define the signature.
 
 

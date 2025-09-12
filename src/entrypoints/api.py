@@ -1,10 +1,13 @@
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
+import anyio
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from loguru import logger
-from returns.result import Failure, Result, Success
+from returns.future import future_safe
+from returns.io import IOFailure, IOResultE, IOSuccess
+from returns.result import Failure, Success
 
 from src.core.logging_config import setup_logging
 from src.core.models import User
@@ -21,9 +24,14 @@ class InMemoryUserFetcher:
         2: User(id=2, name="Bob", age=25),
     }
 
-    async def fetch_by_id(self, key: int) -> User | None:
+    @future_safe
+    async def fetch_by_id(self, key: int) -> User:
         logger.info(f"Fetching user {key} from in-memory store.")
-        return self._users.get(key)
+        user = self._users.get(key)
+        if user is None:
+            raise ValueError(f"No user found with id: {key}")
+
+        return user
 
 
 user_fetcher: InMemoryUserFetcher = InMemoryUserFetcher()  # Instance is created here
@@ -45,11 +53,13 @@ async def read_user(user_id: int) -> User:
     API endpoint to retrieve a user by their ID.
     It uses the core service function to fetch the data.
     """
-    result: Result[User, str] = await get_user_details(user_fetcher, user_id)
+    result: IOResultE[User] = anyio.run(
+        get_user_details(user_fetcher, user_id).awaitable
+    )
     match result:
-        case Success(user):
-            return user  # type: ignore[no-any-return]
-        case Failure(error_message):
+        case IOSuccess(user):
+            return user
+        case IOFailure(error_message):
             raise HTTPException(status_code=404, detail=error_message)
         case _:  # pragma: no cover
             raise HTTPException(status_code=500, detail="Unbekannter Fehler")

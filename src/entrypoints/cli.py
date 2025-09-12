@@ -1,10 +1,9 @@
-import asyncio
-
+import anyio
 import typer
 from loguru import logger
 from returns import pointfree as p
+from returns.io import IOFailure, IOResultE, IOSuccess
 from returns.pipeline import flow
-from returns.result import Failure, Result, Success
 from rich.console import Console
 from rich.table import Table
 
@@ -38,23 +37,22 @@ def get_user(user_id: int) -> None:
     logger.info(f"CLI command 'get-user' called for user_id: {user_id}")
     user_fetcher: InMemoryUserFetcher = InMemoryUserFetcher()
 
-    async def _get_user() -> Result[User, str]:
-        return await get_user_details(user_fetcher, user_id)
-
-    result: Result[User, str] = asyncio.run(_get_user())
+    result: IOResultE[User] = anyio.run(
+        get_user_details(user_fetcher, user_id).awaitable
+    )
 
     match result:
-        case Success(user):
+        case IOSuccess(user):
             table: Table = Table("Attribute", "Value")
             table.add_row("ID", str(user.id))
             table.add_row("Name", user.name)
             table.add_row("Age", str(user.age))
             console.print(table)
-        case Failure(error):
+        case IOFailure(error):
             console.print(f"[bold red]Error:[/] {error}")
         case _:  # pragma: no cover
             console.print(f"[bold red]Error:[/] {result}")
-            Failure(f"This should never happen: {result}")
+            IOFailure(f"This should never happen: {result}")
 
 
 def main() -> None:  # pragma: no cover

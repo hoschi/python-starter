@@ -2,64 +2,57 @@
     // ======================================================================
     // 1. Python Interpreter & Environment
     // ======================================================================
-    // This setting is often machine-specific. It's better to use the command
-    // `Python: Select Interpreter` from the command palette (Cmd+Shift+P)
-    // to select the interpreter located in the `.venv` directory of the project.
-    // VS Code will automatically create a `.vscode/settings.json` with the correct path.
-    // Example for a user-level setting (not project-specific):
-    // "python.defaultInterpreterPath": "/path/to/your/conda/envs/my-project-env/bin/python",
+    "python.terminal.activateEnvironment": true,
 
     // ======================================================================
-    // 2. Language Server: BasedPyright takes over
+    // 2. Language Server: Pylance (Pyright) für Code Completion
     // ======================================================================
-    "python.languageServer": "None",
-    // Disables Microsoft's default server (Pylance) to let our specialized `BasedPyright` server take full control.
+    // Pylance/Pyright für Completion und Navigation verwenden
+    "python.languageServer": "Pylance",
 
-    // Turns off the built-in type checking of the Python plugin to avoid duplicate error messages.
+    // WICHTIG: Type-Checking von Pylance/Pyright ausschalten
     "python.analysis.typeCheckingMode": "off",
 
-	// enable MyPy because this the only thing working with `returns`!
-    "python.linting.mypyEnabled": true,
+    // Pylance Einstellungen für bessere Completion
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.inlayHints.variableTypes": false,
+    "python.analysis.inlayHints.functionReturnTypes": false,
 
     // ======================================================================
-    // 3. Formatting & Linting with Ruff
+    // 3. Mypy: NUR für Type-Checking beim Speichern
+    // ======================================================================
+    // Mypy Extension von Microsoft verwenden
+    "mypy-type-checker.importStrategy": "fromEnvironment",
+
+    // Mypy nur bei Workspace-weiten Überprüfungen ausführen
+    "mypy-type-checker.reportingScope": "workspace",
+
+    // Daemon deaktivieren für zuverlässigere Checks
+    "mypy-type-checker.preferDaemon": false,
+
+    // Benachrichtigungen nur bei Fehlern
+    "mypy-type-checker.showNotifications": "onError",
+
+    // ======================================================================
+    // 4. Formatting & Linting mit Ruff (bleibt unverändert)
     // ======================================================================
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
-        // Sets Ruff as the default tool for code formatting.
-
         "editor.formatOnSave": true,
-        // Automatically formats your code on every save.
-
         "editor.codeActionsOnSave": {
             "source.fixAll.ruff": "explicit",
-            // Automatically fixes safe, non-controversial linting errors on save.
-
             "source.organizeImports.ruff": "explicit"
-            // Automatically sorts and removes unused imports on save.
         }
     },
     "ruff.importStrategy": "fromEnvironment",
-    // Ensures the Ruff extension uses the exact version of Ruff from your Poetry environment.
 
     // ======================================================================
-    // 4. Test Integration
+    // 5. Test Integration (bleibt unverändert)
     // ======================================================================
     "python.testing.pytestEnabled": true,
-    // Enables the "Test Explorer" sidebar in VS Code for a graphical test runner.
-
-    "python.testing.pytestArgs": [
-        "tests"
-    ],
+    "python.testing.pytestArgs": ["tests"],
     "python.testing.unittestEnabled": false,
-    "python.testing.autoTestDiscoverOnSaveEnabled": true,
-
-    // Tells the Test Explorer to look for tests in the `tests` directory.
-
-    // ======================================================================
-    // 5. Automatische Terminal-Aktivierung
-    // ======================================================================
-    "python.terminal.activateEnvironment": true
-    // Erklärung: Stellt sicher, dass jedes neue integrierte Terminal (`Cmd + Shift + ö` oder `Ctrl + Shift + `)
-    // automatisch den `conda activate my-project-env`-Befehl ausführt.
+    "python.testing.autoTestDiscoverOnSaveEnabled": true
 }
+
