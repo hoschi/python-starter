@@ -1,5 +1,6 @@
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from typing import cast
 
 import anyio
 import uvicorn
@@ -59,7 +60,8 @@ async def read_user(user_id: int) -> User:
     )
 
     if isinstance(result, IOSuccess):
-        return unsafe_perform_io(result.unwrap())
+        success: IOSuccess[User] = cast(IOSuccess[User], result)
+        return unsafe_perform_io(success.unwrap())
     else:
         raise HTTPException(status_code=404, detail=str(result.failure()))
 

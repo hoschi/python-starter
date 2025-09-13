@@ -2,7 +2,7 @@ import anyio
 import typer
 from loguru import logger
 from returns import pointfree as p
-from returns.io import IOFailure, IOResultE, IOSuccess
+from returns.io import IOResultE
 from returns.pipeline import flow
 from rich.console import Console
 from rich.table import Table
@@ -40,18 +40,19 @@ def get_user(user_id: int) -> None:
     result: IOResultE[User] = anyio.run(
         get_user_details(user_fetcher, user_id).awaitable
     )
-    match result:
-        case IOSuccess(user):
-            table: Table = Table("Attribute", "Value")
-            table.add_row("ID", str(user.id))
-            table.add_row("Name", user.name)
-            table.add_row("Age", str(user.age))
-            console.print(table)
-        case IOFailure(error):
-            console.print(f"[bold red]Error:[/] {error}")
-        case _:  # pragma: no cover
-            console.print(f"[bold red]Error:[/] {result}")
-            IOFailure(f"This should never happen: {result}")
+
+    def print_user(user: User) -> None:
+        table: Table = Table("Attribute", "Value")
+        table.add_row("ID", str(user.id))
+        table.add_row("Name", user.name)
+        table.add_row("Age", str(user.age))
+        console.print(table)
+
+    flow(
+        result,
+        p.map_(print_user),
+        p.alt(lambda error: console.print(f"[bold red]Error:[/] {error}")),
+    )
 
 
 def main() -> None:  # pragma: no cover
