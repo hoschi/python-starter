@@ -6,7 +6,7 @@ import anyio
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from loguru import logger
-from returns.future import future_safe
+from returns.future import FutureResult, FutureResultE
 from returns.io import IOResultE, IOSuccess
 from returns.result import Failure, Success
 from returns.unsafe import unsafe_perform_io
@@ -26,14 +26,15 @@ class InMemoryUserFetcher:
         2: User(id=2, name="Bob", age=25),
     }
 
-    @future_safe
-    async def fetch_by_id(self, key: int) -> User:
+    def fetch_by_id(self, key: int) -> FutureResultE[User]:
         logger.info(f"Fetching user {key} from in-memory store.")
         user = self._users.get(key)
         if user is None:
-            raise ValueError(f"No user found with id: {key}")
+            return FutureResult.from_failure(
+                ValueError(f"No user found with id: {key}")
+            )
 
-        return user
+        return FutureResult.from_value(user)
 
 
 user_fetcher: InMemoryUserFetcher = InMemoryUserFetcher()  # Instance is created here
