@@ -9,7 +9,7 @@ class UserFactory(ModelFactory[User]):
     __check_model__ = True
 
 
-def test_user_model_creation_with_factory():
+def test_user_model_creation_with_factory() -> None:
     """Shows how to automatically generate valid User instances."""
     # `build()` creates a Pydantic instance with random but type-correct data
     user_instance = UserFactory.build()
@@ -21,7 +21,7 @@ def test_user_model_creation_with_factory():
     assert user_instance.age <= 120
 
 
-def test_user_model_creation_with_overrides():
+def test_user_model_creation_with_overrides() -> None:
     """Shows how to set specific values during generation."""
     user_instance = UserFactory.build(name="Specific Test Name", id=123)
 

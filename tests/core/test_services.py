@@ -1,15 +1,15 @@
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
+from returns.future import FutureResult, FutureResultE
 from returns.result import Failure, Success
 
 from src.core import services
 from src.core.models import User
-from src.core.protocols import Fetcher
 
 
 # --- Technique 1: Unit-Testing ---
-def test_simple_pipeline_logic():
+def test_simple_pipeline_logic() -> None:
     """A simple unit test for a deterministic function."""
     result = services.example_transform_service("  Test  ")
     # `returns` provides helpers to safely extract the content
@@ -17,20 +17,27 @@ def test_simple_pipeline_logic():
 
 
 # --- Technique 3: Mocking with Protocols ---
-class MockUserFetcher(Fetcher[int, User]):
-    """A test double that satisfies the Fetcher protocol."""
+class MockUserFetcher:
+    _users = {
+        1: User(id=1, name="Batman", age=25),
+    }
 
-    def __init__(self, user_to_return: User | None):
-        self._user = user_to_return
+    def fetch_by_id(self, key: int) -> FutureResultE[User]:
+        user = self._users.get(key)
+        if user is None:
+            return FutureResult.from_failure(
+                ValueError(f"No user found with id: {key}")
+            )
 
-    async def fetch_by_id(self, key: int) -> User | None:  # noqa: ARG002
-        return self._user
+        return FutureResult.from_value(user)
+
+
+mock_fetcher = MockUserFetcher()
 
 
 @pytest.mark.asyncio
-async def test_get_user_details_success_with_mock():
+async def test_get_user_details_success_with_mock() -> None:
     """Tests the success path of get_user_details with a mock."""
-    mock_fetcher = MockUserFetcher(User(id=1, name="Mocked User", age=30))
     result = await services.get_user_details(mock_fetcher, 1)
 
     assert isinstance(result, Success)
@@ -38,9 +45,8 @@ async def test_get_user_details_success_with_mock():
 
 
 @pytest.mark.asyncio
-async def test_get_user_details_not_found_with_mock():
+async def test_get_user_details_not_found_with_mock() -> None:
     """Tests the failure path (user not found) with a mock."""
-    mock_fetcher = MockUserFetcher(user_to_return=None)
     result = await services.get_user_details(mock_fetcher, 999)
 
     assert isinstance(result, Failure)
@@ -49,7 +55,7 @@ async def test_get_user_details_not_found_with_mock():
 
 # --- Technique 2: Property-Based Testing ---
 @given(st.text().filter(lambda s: s != "error"))
-def test_example_transform_service_properties(s: str):
+def test_example_transform_service_properties(s: str) -> None:
     """
     Tests properties of the transformation function.
     Hypothesis generates hundreds of different strings.
@@ -65,7 +71,7 @@ def test_example_transform_service_properties(s: str):
     ).strip() == result.unwrap().replace("transformed: ", "")
 
 
-def test_example_transform_service_failure():
+def test_example_transform_service_failure() -> None:
     """
     Tests the failure path of the transformation function with non-string input.
     """

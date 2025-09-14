@@ -11,9 +11,9 @@ from returns.io import IOResultE, IOSuccess
 from returns.result import Failure, Success
 from returns.unsafe import unsafe_perform_io
 
-from src.core.logging_config import setup_logging
 from src.core.models import User
 from src.core.services import example_transform_service, get_user_details
+from src.shell.logging_config import setup_logging
 
 
 # This is a *concrete* implementation that satisfies the Fetcher protocol.

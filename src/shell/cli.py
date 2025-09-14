@@ -7,10 +7,10 @@ from returns.pipeline import flow
 from rich.console import Console
 from rich.table import Table
 
-from src.core.logging_config import setup_logging
 from src.core.models import User
 from src.core.services import example_transform_service, get_user_details
-from src.entrypoints.api import InMemoryUserFetcher  # Reusing the same fetcher for demo
+from src.shell.api import InMemoryUserFetcher  # Reusing the same fetcher for demo
+from src.shell.logging_config import setup_logging
 
 app: typer.Typer = typer.Typer()
 console: Console = Console()

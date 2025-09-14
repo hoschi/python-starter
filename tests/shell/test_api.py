@@ -1,11 +1,13 @@
+from collections.abc import AsyncGenerator
+
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from src.entrypoints.api import app
+from src.shell.api import app
 
 
 @pytest.fixture(scope="module")
-async def test_client():
+async def test_client() -> AsyncGenerator[AsyncClient, None]:
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as client:
@@ -13,7 +15,7 @@ async def test_client():
 
 
 @pytest.mark.asyncio
-async def test_read_user_success(test_client: AsyncClient):
+async def test_read_user_success(test_client: AsyncClient) -> None:
     """Tests successful user retrieval."""
     response = await test_client.get("/users/1")
     assert response.status_code == 200
@@ -23,7 +25,7 @@ async def test_read_user_success(test_client: AsyncClient):
 
 
 @pytest.mark.asyncio
-async def test_read_user_not_found(test_client: AsyncClient):
+async def test_read_user_not_found(test_client: AsyncClient) -> None:
     """Tests the case where a user is not found."""
     response = await test_client.get("/users/999")
     assert response.status_code == 404
@@ -31,7 +33,7 @@ async def test_read_user_not_found(test_client: AsyncClient):
 
 
 @pytest.mark.asyncio
-async def test_transform_text_success(test_client: AsyncClient):
+async def test_transform_text_success(test_client: AsyncClient) -> None:
     """Tests the transformation endpoint."""
     response = await test_client.get("/transform/?text=  Hello World  ")
     assert response.status_code == 200
@@ -42,7 +44,7 @@ async def test_transform_text_success(test_client: AsyncClient):
 
 
 @pytest.mark.asyncio
-async def test_transform_text_error(test_client: AsyncClient):
+async def test_transform_text_error(test_client: AsyncClient) -> None:
     """Tests the transformation endpoint."""
     response = await test_client.get("/transform/?text=error")
     assert response.status_code == 400

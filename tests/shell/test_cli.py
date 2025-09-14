@@ -1,11 +1,11 @@
 from typer.testing import CliRunner
 
-from src.entrypoints.cli import app
+from src.shell.cli import app
 
 runner = CliRunner()
 
 
-def test_transform_command_success():
+def test_transform_command_success() -> None:
     """
     Tests the 'transform' CLI command with a sample string.
     """
@@ -14,7 +14,7 @@ def test_transform_command_success():
     assert "Error:" in result.stdout
 
 
-def test_transform_command_error():
+def test_transform_command_error() -> None:
     """
     Tests the 'transform' CLI command with a sample string.
     """
@@ -24,7 +24,7 @@ def test_transform_command_error():
     assert "transformed: some text" in result.stdout
 
 
-def test_get_user_command_success():
+def test_get_user_command_success() -> None:
     """
     Tests the 'get-user' CLI command for a user that exists.
     """
@@ -34,7 +34,7 @@ def test_get_user_command_success():
     assert "30" in result.stdout
 
 
-def test_get_user_command_not_found():
+def test_get_user_command_not_found() -> None:
     """
     Tests the 'get-user' CLI command for a user that does not exist.
     """
