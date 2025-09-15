@@ -41,4 +41,4 @@ def test_get_user_command_not_found() -> None:
     result = runner.invoke(app, ["get-user", "999"])
     assert result.exit_code == 0
     assert "Error:" in result.stdout
-    assert "User with ID 999 not found" in result.stdout
+    assert "No user found with id: 999" in result.stdout

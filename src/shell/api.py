@@ -2,7 +2,6 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import cast
 
-import anyio
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from loguru import logger
@@ -56,15 +55,15 @@ async def read_user(user_id: int) -> User:
     API endpoint to retrieve a user by their ID.
     It uses the core service function to fetch the data.
     """
-    result: IOResultE[User] = anyio.run(
-        get_user_details(user_fetcher, user_id).awaitable
-    )
+    result: IOResultE[User] = await get_user_details(user_fetcher, user_id).awaitable()
 
     if isinstance(result, IOSuccess):
         success: IOSuccess[User] = cast(IOSuccess[User], result)
         return unsafe_perform_io(success.unwrap())
     else:
-        raise HTTPException(status_code=404, detail=str(result.failure()))
+        raise HTTPException(
+            status_code=404, detail=str(unsafe_perform_io(result.failure()))
+        )
 
 
 @app.get("/transform/")

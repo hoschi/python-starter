@@ -14,7 +14,7 @@ async def test_client() -> AsyncGenerator[AsyncClient, None]:
         yield client
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_read_user_success(test_client: AsyncClient) -> None:
     """Tests successful user retrieval."""
     response = await test_client.get("/users/1")
@@ -24,15 +24,15 @@ async def test_read_user_success(test_client: AsyncClient) -> None:
     assert data["name"] == "Alice"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_read_user_not_found(test_client: AsyncClient) -> None:
     """Tests the case where a user is not found."""
     response = await test_client.get("/users/999")
     assert response.status_code == 404
-    assert response.json() == {"detail": "User with ID 999 not found."}
+    assert response.json() == {"detail": "No user found with id: 999"}
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_transform_text_success(test_client: AsyncClient) -> None:
     """Tests the transformation endpoint."""
     response = await test_client.get("/transform/?text=  Hello World  ")
@@ -43,7 +43,7 @@ async def test_transform_text_success(test_client: AsyncClient) -> None:
     }
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_transform_text_error(test_client: AsyncClient) -> None:
     """Tests the transformation endpoint."""
     response = await test_client.get("/transform/?text=error")

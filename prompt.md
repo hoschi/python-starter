@@ -619,7 +619,7 @@ class MockUserFetcher:
     async def fetch_by_id(self, key: int) -> User | None:
         return self._user
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_get_user_details_success():
     mock_fetcher = MockUserFetcher(User(id=1, name="Test User"))
     result = await get_user_details(mock_fetcher, 1)
@@ -1275,7 +1275,7 @@ class MockUserFetcher(Fetcher[int, User]):
     async def fetch_by_id(self, key: int) -> User | None:
         return self._user
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_get_user_details_success_with_mock():
     """Testet den Erfolgsfall von get_user_details mit einem Mock."""
     mock_fetcher = MockUserFetcher(User(id=1, name="Mocked User", age=30))
@@ -1284,7 +1284,7 @@ async def test_get_user_details_success_with_mock():
     assert isinstance(result, Success)
     assert result.unwrap().name == "Mocked User"
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_get_user_details_not_found_with_mock():
     """Testet den Fehlerfall (User nicht gefunden) mit einem Mock."""
     mock_fetcher = MockUserFetcher(user_to_return=None)

@@ -2,7 +2,9 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 from returns.future import FutureResult, FutureResultE
+from returns.pipeline import is_successful
 from returns.result import Failure, Success
+from returns.unsafe import unsafe_perform_io
 
 from src.core import services
 from src.core.models import User
@@ -19,7 +21,7 @@ def test_simple_pipeline_logic() -> None:
 # --- Technique 3: Mocking with Protocols ---
 class MockUserFetcher:
     _users = {
-        1: User(id=1, name="Batman", age=25),
+        1: User(id=1, name="Mocked User", age=25),
     }
 
     def fetch_by_id(self, key: int) -> FutureResultE[User]:
@@ -35,22 +37,22 @@ class MockUserFetcher:
 mock_fetcher = MockUserFetcher()
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_get_user_details_success_with_mock() -> None:
     """Tests the success path of get_user_details with a mock."""
     result = await services.get_user_details(mock_fetcher, 1)
 
-    assert isinstance(result, Success)
-    assert result.unwrap().name == "Mocked User"
+    assert is_successful(result)
+    assert unsafe_perform_io(result.unwrap()).name == "Mocked User"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_get_user_details_not_found_with_mock() -> None:
     """Tests the failure path (user not found) with a mock."""
     result = await services.get_user_details(mock_fetcher, 999)
 
-    assert isinstance(result, Failure)
-    assert "not found" in str(result.failure())
+    assert not is_successful(result)
+    assert "No user found" in str(result.failure())
 
 
 # --- Technique 2: Property-Based Testing ---
