@@ -124,6 +124,9 @@ addopts = [
 testpaths = ["tests", "docs"]
 asyncio_mode = "auto"
 
+[tool.pytest.nbval]
+sanitize_metadata = ["execution_count", "metadata.pid", "metadata.user"]
+
 [tool.coverage.run]
 omit = [
     "./src/core/logging_config.py",
@@ -133,9 +136,17 @@ omit = [
 format = "ruff format ."
 lint = "ruff check --fix ."
 typecheck-basedpyright = "basedpyright"
-typecheck-mypy = "mypy src"
+typecheck-mypy = "mypy"
 test = "pytest"
+test-with-jupyter = "pytest --nbval"
 
+ci = [
+    "format",
+    "lint",
+    "typecheck-basedpyright",
+    "typecheck-mypy",
+    "test-with-jupyter"
+]
 check-all = [
     "format",
     "lint",
