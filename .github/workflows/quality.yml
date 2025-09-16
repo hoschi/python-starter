@@ -22,23 +22,8 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Run Linter (Ruff)
-        run: poetry run ruff check .
-
-      - name: Run Formatter Check (Ruff)
-        run: poetry run ruff format --check .
-
-      - name: Run Static Type Checking (BasedPyright)
-        run: poetry run basedpyright src/
-
-      - name: Run Static Type Checking (MyPy)
-        run: poetry run mypy src/
-
-      - name: Run Import Cycle Check (Pylint)
-        run: poetry run pylint src
-
-      - name: Run Tests with Coverage
-        run: poetry run pytest
+      - name: Run CI
+        run: poetry run poe ci
 
       - name: Upload Coverage Reports
         uses: actions/upload-artifact@v4

@@ -2,8 +2,6 @@ from typing import Protocol, TypeVar
 
 from returns.future import future_safe
 
-from src.core.models import User
-
 # TypeVars for generic keys and return values
 KeyType = TypeVar("KeyType", contravariant=True)
 ReturnType = TypeVar("ReturnType", covariant=True)
@@ -21,10 +19,3 @@ class Fetcher(Protocol[KeyType, ReturnType]):
     ) -> (
         ReturnType
     ): ...  # The '...' is intentional; Protocols only define the signature.
-
-
-# Example of a more specific protocol
-class UserFetcher(Fetcher[int, User]):
-    """A specific fetcher protocol for retrieving User objects by their integer ID."""
-
-    ...
