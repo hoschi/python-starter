@@ -1,6 +1,6 @@
 # Functional Python Blueprint
 
-[![Code Quality Check](https://github.com/<Your-GitHub-Username>/<Your-Repo-Name>/actions/workflows/quality.yml/badge.svg)](https://github.com/<Your-GitHub-Username>/<Your-Repo-Name>/actions/workflows/quality.yml)
+[![Code Quality Check](https://github.com/hoschi/python-starter/actions/workflows/quality.yml/badge.svg)](https://github.com/hoschi/python-starter/actions/workflows/quality.yml)
 
 This project is a highly opinionated, modern blueprint for building robust, type-safe, and maintainable Python applications using a pragmatic functional approach.
 
@@ -23,11 +23,11 @@ This project is a highly opinionated, modern blueprint for building robust, type
 
 ```bash
 # Clone the repository
-git clone https://github.com/<Your-GitHub-Username>/<Your-Repo-Name>.git
-cd <Your-Repo-Name>
+git clone https://github.com/hoschi/python-starter.git <Your-Project-Name>
+cd <Your-Project-Name>
 ```
 
-Change project name 'py-starter' to yours
+Change project name 'py-starter' to yours in
 - `pyproject.toml`
 - `conda.yml`
 
@@ -40,18 +40,44 @@ conda activate py-starter
 poetry install
 
 # add git filter for Jupyter notebooks
-poetry run nbstripout --install
+nbstripout --install
+
+rm -rf .git/
+# check the files and add to the `.gitignore` files which you don't want to be in git
+git init
+git add .
+git commit -m "init"
 ```
 
 ## Daily Work
 
 ### Running the Applications
+Die Web-API ist mit FastAPI implementiert und bietet folgende Funktionen:
 
-**Start the Web API:**
+**Starten der API:**
 ```bash
 poetry run start-api
 ```
-The API will be available at `http://127.0.0.1:8000`. You can access the interactive documentation at `http://127.0.0.1:8000/docs`.
+Dadurch wird die Anwendung unter http://localhost:6163 gestartet.
+
+**Verfügbare Endpunkte:**
+
+- `GET /users/{user_id}`
+	- Gibt einen Benutzer mit der angegebenen ID zurück.
+	- Antwort: JSON-Objekt mit Feldern `id`, `name`, `age`.
+	- Beispiel: `curl http://localhost:6361/users/1`
+
+- `GET /transform/?text=...`
+	- Transformiert einen Text (z.B. Normalisierung, Beispiel siehe Code).
+	- Antwort: JSON mit `original` und `transformed`.
+	- Beispiel: `curl 'http://localhost:6361/transform/?text=Hallo%20Welt'`
+
+**Fehlerbehandlung:**
+- Bei nicht gefundenem Benutzer wird ein Fehler 404 zurückgegeben.
+- Bei ungültigen Eingaben im Transform-Endpunkt Fehler 400.
+
+**Weitere Hinweise:**
+- Die API nutzt ein In-Memory-User-Repository (nur Demo-Zwecke).
 
 **Start the CLI:**
 ```bash
@@ -69,14 +95,17 @@ This project is equipped with a comprehensive set of quality gates. To run them 
 
 ```bash
 # Run linter and formatter check
-poetry run ruff check .
-poetry run ruff format --check .
+ruff check .
+ruff format --check .
 
 # Run static type checking
-poetry run basedpyright --verifytypes src
+mypy
 
 # Run tests and generate coverage reports
-poetry run pytest
+pytest
+
+# Run all checks
+poe check-all
 ```
 
 To view the interactive coverage report after running the tests, open `htmlcov/index.html` in your browser.
@@ -87,7 +116,7 @@ The `docs/` directory contains interactive Jupyter Notebooks. They are the best 
 
 1.  **Open the project in VS Code.**
 2.  **Make sure you have the recommended extensions installed (VS Code will prompt you).**
-3.  **Select the project's Python interpreter (`.venv/bin/python`).**
+3.  **Select the project's Python interpreter: YOUR CONDA ENV.**
 4.  **Open `docs/01_core_concepts.ipynb` or `docs/02_advanced_patterns.ipynb`.**
 5.  **Run the code cells one by one to see the concepts in action.**
 
@@ -99,13 +128,12 @@ This project is specifically optimized to work with modern AI coding assistants.
 
 ### Setup
 
-**For Cursor:**
-The `.cursor-rules` file in `ai-assistants/` is automatically detected by Cursor. It forces the AI to consider our project rules with every request. No further setup is needed.
+Cursor and Gemini are already set up for you.
 
-**For `gemini-cli` or other tools:**
+**For other tools:**
 Explicitly include the main directive in your prompt. Example:
 ```bash
-gemini "Refactor the 'process_data' function in 'src/core/services.py'. Strictly follow the instructions from 'ai-assistants/01-main-directives.md'."
+claude "Refactor the 'process_data' function in 'src/core/services.py'. Strictly follow the instructions from 'ai-assistants/01-main-directives.md'."
 ```
 
 ### The Rules

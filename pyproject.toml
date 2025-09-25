@@ -50,8 +50,8 @@ nbstripout = "^0.8.1"
 nbval = "^0.11.0"
 
 [tool.poetry.scripts]
-start-api = "src.entrypoints.api:main"
-start-cli = "src.entrypoints.cli:main"
+start-api = "src.shell.api:main"
+start-cli = "src.shell.cli:main"
 
 [build-system]
 requires = ["poetry-core"]

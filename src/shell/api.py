@@ -81,7 +81,7 @@ async def transform_text(text: str) -> dict[str, str]:
 
 def main() -> None:  # pragma: no cover
     """Main function to run the FastAPI application."""
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=6361)
 
 
 if __name__ == "__main__":  # pragma: no cover
