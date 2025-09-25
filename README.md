@@ -39,12 +39,18 @@ conda activate py-starter
 # Install dependencies using Poetry
 poetry install
 
+rm -rf .git/
+git init
+
+# check the files and add to the `.gitignore` files which you don't want to be in git
+echo ".vscode/" >> .gitignore
+
+# remove Rennovate if not needed
+rm renovate.json
+
 # add git filter for Jupyter notebooks
 nbstripout --install
 
-rm -rf .git/
-# check the files and add to the `.gitignore` files which you don't want to be in git
-git init
 git add .
 git commit -m "init"
 ```
