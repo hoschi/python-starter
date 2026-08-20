@@ -17,7 +17,7 @@ pydantic-settings = "^2.3.4"
 pyrsistent = "^0.20.0"
 
 # Web and CLI entrypoints
-fastapi = "^0.116.1"
+fastapi = "^0.141.0"
 typer = {extras = ["rich"], version = "^0.17.3"}
 uvicorn = {extras = ["standard"], version = "^0.35.0"}
 # Logging
