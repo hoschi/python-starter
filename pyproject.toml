@@ -18,7 +18,7 @@ pyrsistent = "^0.20.0"
 
 # Web and CLI entrypoints
 fastapi = "^0.116.1"
-typer = {extras = ["rich"], version = "^0.17.3"}
+typer = {extras = ["rich"], version = "^0.27.0"}
 uvicorn = {extras = ["standard"], version = "^0.35.0"}
 # Logging
 loguru = "^0.7.2"
